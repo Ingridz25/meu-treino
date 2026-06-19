@@ -60,6 +60,13 @@ body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter',
 .rotacao-dia { font-size: 13px; color: #ffffff50; }
 .rotacao-treino { font-size: 13px; font-weight: 600; }
 .tip-card { margin-top: 12px; padding: 12px 14px; background: #0f0f0f; border-radius: 10px; border: 1px solid #1a1a1a; font-size: 11px; color: #ffffff25; line-height: 1.6; }
+.backup-card { margin-top: 12px; padding: 14px; background: #0f0f0f; border-radius: 10px; border: 1px solid #1a1a1a; }
+.backup-title { font-size: 11px; color: #ffffff30; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+.backup-btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.backup-btn { flex: 1; min-width: 80px; padding: 10px 12px; border-radius: 8px; border: 1px solid #333; background: #1a1a1a; color: #ffffff80; font-size: 13px; cursor: pointer; text-align: center; }
+.backup-btn.export { color: #4ADE80; border-color: #4ADE8033; }
+.backup-btn.import { color: #38BDF8; border-color: #38BDF833; }
+.backup-btn.clear { color: #FB923C; border-color: #FB923C33; }
 .freq-header { padding: 14px 14px 0; }
 .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
 .stat-card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 12px; padding: 14px 10px; text-align: center; }
@@ -153,6 +160,18 @@ body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter',
     <div class="leg-item"><div class="leg-dot" style="background:#4ADE80"></div>Dia C</div>
     <div class="leg-item"><div class="leg-dot" style="background:#FB923C"></div>Dia D</div>
     <div class="leg-item"><div class="leg-dot" style="background:#2a2a2a"></div>Descanso</div>
+  </div>
+  <!-- Backup / Exportação -->
+  <div style="padding: 14px;">
+    <div class="backup-card">
+      <div class="backup-title">💾 Backup dos dados</div>
+      <div class="backup-btn-row">
+        <button class="backup-btn export" onclick="exportarDados()">⬇️ Exportar</button>
+        <button class="backup-btn import" onclick="document.getElementById('import-file').click()">⬆️ Importar</button>
+        <button class="backup-btn clear" onclick="confirmarLimpar()">🗑️ Limpar</button>
+      </div>
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importarDados(event)" />
+    </div>
   </div>
 </div>
 
@@ -308,6 +327,62 @@ function salvar() {
   } catch(e) {}
 }
 
+// --- Backup / Exportação ---
+function exportarDados() {
+  var dados = {
+    registro: registro,
+    cargas: cargas,
+    exportado_em: new Date().toISOString()
+  };
+  var blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'meu_treino_backup.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function importarDados(event) {
+  var file = event.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var dados = JSON.parse(e.target.result);
+      if (!dados.registro || !dados.cargas) {
+        alert('Arquivo inválido. Precisa conter registro e cargas.');
+        return;
+      }
+      if (confirm('Importar dados? Isso sobrescreverá seus dados atuais.')) {
+        registro = dados.registro;
+        cargas = dados.cargas;
+        salvar();
+        alert('Dados importados com sucesso! A página será recarregada.');
+        location.reload();
+      }
+    } catch (err) {
+      alert('Erro ao ler o arquivo. Verifique se é um JSON válido.');
+    }
+  };
+  reader.readAsText(file);
+  // Limpa o input para permitir importar o mesmo arquivo novamente
+  event.target.value = '';
+}
+
+function confirmarLimpar() {
+  if (confirm('Tem certeza que deseja limpar todos os dados? (registros de frequência e cargas)')) {
+    registro = {};
+    cargas = {};
+    salvar();
+    alert('Dados apagados. A página será recarregada.');
+    location.reload();
+  }
+}
+
+// --- Navegação e Renderização ---
 function selectDay(d) {
   currentDay = d;
   gruposState = {};
