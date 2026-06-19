@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Meu Treino">
 <meta name="theme-color" content="#0d0d0d">
-<title>Meu Treino</title>
+<title>Meu Treino · Upper/Lower 2x</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter', system-ui, sans-serif; min-height: 100vh; padding-bottom: 80px; }
@@ -39,8 +39,11 @@ body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter',
 .ex-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
 .ex-nome { font-size: 14px; font-weight: 600; color: #f0f0f0; flex: 1; }
 .ex-series { border-radius: 6px; padding: 3px 8px; font-size: 12px; font-weight: 700; white-space: nowrap; }
-.ex-carga { font-size: 12px; font-weight: 600; margin-top: 5px; }
 .ex-obs { font-size: 12px; color: #ffffff45; line-height: 1.4; margin-top: 5px; }
+.ex-carga-container { margin-top: 6px; display: flex; align-items: center; gap: 6px; }
+.ex-carga-label { font-size: 12px; color: #ffffff60; }
+.ex-carga-input { background: #1e1e1e; border: 1px solid #333; border-radius: 6px; padding: 5px 10px; font-size: 13px; color: #f0f0f0; width: 100%; outline: none; font-family: inherit; }
+.ex-carga-input::placeholder { color: #ffffff30; }
 .ab-card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 12px 14px; margin-top: 4px; }
 .ab-title { font-size: 13px; font-weight: 600; color: #ffffff70; margin-bottom: 4px; }
 .ab-text { font-size: 12px; color: #ffffff45; line-height: 1.5; }
@@ -110,8 +113,8 @@ body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter',
 <div class="page active" id="page-treino">
   <div class="header">
     <div class="header-eyebrow">Plano de Treino</div>
-    <div class="header-title">4 dias · Definição &amp; Shape</div>
-    <div class="header-sub">Push · Pull · Legs 1 · Legs 2</div>
+    <div class="header-title">Upper/Lower 2x · Equilibrado</div>
+    <div class="header-sub">A: Upper 1 · B: Lower 1 · C: Upper 2 · D: Lower 2</div>
   </div>
   <div class="day-selector">
     <button class="day-btn" onclick="selectDay('A')">Dia A</button>
@@ -159,10 +162,10 @@ body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter',
     <div class="modal-title" id="modal-title"></div>
     <div class="modal-date" id="modal-date"></div>
     <div class="modal-options">
-      <div class="modal-opt modal-opt-a" onclick="registrar('A')">&#128170; Dia A<br><span style="font-size:11px;font-weight:400">Push</span></div>
-      <div class="modal-opt modal-opt-b" onclick="registrar('B')">&#127947; Dia B<br><span style="font-size:11px;font-weight:400">Pull</span></div>
-      <div class="modal-opt modal-opt-c" onclick="registrar('C')">&#129461; Dia C<br><span style="font-size:11px;font-weight:400">Legs 1</span></div>
-      <div class="modal-opt modal-opt-d" onclick="registrar('D')">&#127825; Dia D<br><span style="font-size:11px;font-weight:400">Legs 2</span></div>
+      <div class="modal-opt modal-opt-a" onclick="registrar('A')">&#128170; Dia A<br><span style="font-size:11px;font-weight:400">Upper 1</span></div>
+      <div class="modal-opt modal-opt-b" onclick="registrar('B')">&#127947; Dia B<br><span style="font-size:11px;font-weight:400">Lower 1</span></div>
+      <div class="modal-opt modal-opt-c" onclick="registrar('C')">&#129461; Dia C<br><span style="font-size:11px;font-weight:400">Upper 2</span></div>
+      <div class="modal-opt modal-opt-d" onclick="registrar('D')">&#127825; Dia D<br><span style="font-size:11px;font-weight:400">Lower 2</span></div>
       <div class="modal-opt modal-opt-rest" onclick="registrar('R')">&#128564; Descanso</div>
       <div class="modal-opt modal-opt-clear" onclick="registrar(null)">&#10005; Limpar</div>
     </div>
@@ -181,108 +184,105 @@ body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter',
 
 <script>
 var TREINOS = {
-  A: { nome: "DIA A — Push", foco: "Ombro · Peito · Tríceps", cor: "#C084FC", bg: "#1e0a2e",
+  A: { nome: "DIA A — Upper 1", foco: "Peito · Costas · Ombro · Braços", cor: "#C084FC", bg: "#1e0a2e",
     grupos: [
       { nome: "🔥 AQUECIMENTO", itens: [
-        { nome: "Rotação de ombro com elástico leve", series: "2x15", obs: "Círculos frente e trás. Ativa manguito rotador antes de qualquer carga." },
-        { nome: "Elevação lateral na polia (50% da carga)", series: "2x15", obs: "Aquecimento específico do deltóide lateral." }
+        { nome: "Rotação de ombro com elástico", series: "2x15", obs: "Círculos frente e trás." },
+        { nome: "Puxada alta com 40% carga", series: "2x10", obs: "Aquece articulação do ombro." }
       ]},
-      { nome: "🎯 OMBROS — PRIORIDADE", itens: [
-        { nome: "Elevação lateral na polia (unilateral)", series: "4x15", carga: "5kg", obs: "Cotovelo levemente flexionado, sobe até a linha do ombro. Pausa 1s no topo. Tensão constante é o que define o deltóide médio." },
-        { nome: "Desenvolvimento com halteres (sentado)", series: "4x10–12", obs: "Cotovelos a 90° no início. Não trava no topo. Controla a descida em 3s." },
-        { nome: "Elevação frontal na polia baixa (com corda)", series: "3x12", obs: "Tensão constante em todo o movimento, sem ponto de descanso no quadril." }
+      { nome: "🎯 PEITO (FOCO)", itens: [
+        { nome: "Supino inclinado com halteres (30-45°)", series: "4x8-12", obs: "Peitoral superior. Controla descida 3s." }
       ]},
-      { nome: "💪 PEITO", itens: [
-        { nome: "Chest press na máquina (sentado)", series: "4x12", carga: "25kg", obs: "Retrai a escápula antes de empurrar. Controla a volta em 3s." },
-        { nome: "Crucifixo na máquina", series: "3x15", carga: "35–40kg", obs: "Amplitude total, pausa 1s no fechamento. Define separação do peitoral." }
+      { nome: "🏋️ COSTAS (LARGURA E ESPESSURA)", itens: [
+        { nome: "Puxada alta aberta pronada", series: "4x10-12", obs: "Cotovelo aponta pro chão. Controla subida." },
+        { nome: "Remada baixa na polia (pegada neutra)", series: "3x12", obs: "Retrai escápula. Pausa 1s no topo." }
       ]},
-      { nome: "🔱 TRÍCEPS — DEFINIÇÃO", itens: [
-        { nome: "Tríceps pulley com corda (polia alta)", series: "4x15", carga: "20kg", obs: "Supina o pulso no final de cada rep — isso separa as duas cabeças e define a ferradura. Foca na contração total." },
-        { nome: "Tríceps corda unilateral (polia alta)", series: "3x12 cada", obs: "Unilateral no final pra equalizar força entre os lados." }
+      { nome: "🎯 OMBROS", itens: [
+        { nome: "Desenvolvimento com halteres sentado", series: "3x10-12", obs: "Cotovelos a 90°. Não trava no topo." },
+        { nome: "Elevação lateral na polia unilateral", series: "3x15", obs: "Pausa 1s no topo. Tensão constante." }
+      ]},
+      { nome: "💪 BRAÇOS", itens: [
+        { nome: "Tríceps francês unilateral com halter (overhead)", series: "3x12 cada", obs: "Cotovelo pra cima. Cabeça longa." },
+        { nome: "Rosca martelo com halteres", series: "3x12", obs: "Braquial e braquioradial." }
       ]}
     ]
   },
-  B: { nome: "DIA B — Pull", foco: "Costas · Bíceps · Antebraço", cor: "#38BDF8", bg: "#0a1e2e",
+  B: { nome: "DIA B — Lower 1", foco: "Quadríceps · Posterior · Panturrilha", cor: "#38BDF8", bg: "#0a1e2e",
     grupos: [
       { nome: "🔥 AQUECIMENTO", itens: [
-        { nome: "Face pull na polia com corda", series: "2x15", obs: "Ativa posteriores do ombro. Fundamental antes de puxada." },
-        { nome: "Puxada alta com 40% da carga", series: "2x10", obs: "Aquecimento articular da glenoumeral." }
-      ]},
-      { nome: "🏋️ COSTAS — LARGURA", itens: [
-        { nome: "Puxada alta aberta (pegada pronada)", series: "4x10–12", carga: "55–59kg", obs: "Cotovelo aponta pro chão no final. Foca em latíssimo. Controla a subida." },
-        { nome: "Gravitron / barra assistida (supinada)", series: "3x10", carga: "20kg contrapeso", obs: "Pegada supinada ativa mais bíceps e porção inferior do dorsal." }
-      ]},
-      { nome: "🏋️ COSTAS — ESPESSURA", itens: [
-        { nome: "Remada baixa na polia", series: "4x12", carga: "40–50kg", obs: "Retrai escápula antes de puxar. Pausa 1s no topo. Controla a volta em 3s." },
-        { nome: "Pull-over na polia ou halter no banco", series: "3x12", obs: "Define o shape lateral do dorsal. Muito eficiente e subestimado." },
-        { nome: "Crucifixo inverso na máquina", series: "3x15", carga: "10–15kg", obs: "Posterior do ombro atua na puxada. Importante pro equilíbrio e postura." }
-      ]},
-      { nome: "💪 BÍCEPS", itens: [
-        { nome: "Rosca direta na polia", series: "4x12", carga: "10kg", obs: "Tensão constante do início ao fim. Cotovelo fixo no corpo. Desce devagar." },
-        { nome: "Rosca martelo com halteres", series: "3x12", obs: "Define braquial e dá espessura no braço." }
-      ]},
-      { nome: "🖐️ ANTEBRAÇO", itens: [
-        { nome: "Rosca inversa na polia", series: "3x15", carga: "3kg", obs: "Carga certa pra esse músculo. Não aumenta." },
-        { nome: "Rosca de punho (wrist curl) na polia", series: "3x15", carga: "12–14kg", obs: "Amplitude total — vai bem pra baixo. Define o antebraço." }
-      ]}
-    ]
-  },
-  C: { nome: "DIA C — Legs 1", foco: "Quadríceps · Panturrilha", cor: "#4ADE80", bg: "#0a1e0f",
-    grupos: [
-      { nome: "🔥 AQUECIMENTO", itens: [
-        { nome: "Agachamento livre sem peso (bastão)", series: "2x15", obs: "Ativa padrão de movimento antes de adicionar carga." },
-        { nome: "Leg press unilateral com 30% da carga", series: "2x10 cada", obs: "Aquecimento articular do joelho e quadril." }
+        { nome: "Mobilidade de quadril", series: "2x10 cada", obs: "Círculos, afundo sem peso." },
+        { nome: "Pistol squat assistido (TRX ou banco)", series: "2x6 cada", obs: "Progressão do movimento." }
       ]},
       { nome: "🦵 QUADRÍCEPS", itens: [
-        { nome: "Agachamento livre", series: "4x10–12", carga: "30kg total", obs: "Profundidade abaixo dos 90°. Joelhos acompanham os pés. Descida em 3s." },
-        { nome: "Leg press unilateral", series: "4x12 cada", carga: "7 placas", obs: "Unilateral detecta e corrige assimetrias. Não trava o joelho no topo." },
-        { nome: "Cadeira extensora", series: "4x15", carga: "80–85kg", obs: "Ênfase nos últimos 30° de extensão — ativa o vasto medial (a gota acima do joelho). Pausa 2s no topo." }
+        { nome: "Pistol squat (com halter no peito)", series: "4x6-10 cada", obs: "Calcanhar no chão. Sobrecarga progressiva." },
+        { nome: "Leg press unilateral", series: "3x10-12 cada", obs: "Amplitude profunda. Joelho não trava." },
+        { nome: "Cadeira extensora", series: "3x15", obs: "Ênfase últimos 30° (VMO). Pausa 2s." }
+      ]},
+      { nome: "🏋️ POSTERIOR", itens: [
+        { nome: "Stiff com halteres (RDL)", series: "4x10-12", obs: "Quadril vai pra trás. Alonga isquiotibiais." }
       ]},
       { nome: "🦶 PANTURRILHA", itens: [
-        { nome: "Panturrilha em pé unilateral (step ou máquina)", series: "4x15 cada", carga: "10–15kg halter", obs: "Adiciona carga — sem peso o estímulo é insuficiente. Calcanhar bem abaixo do step. Pausa 1s no topo." },
-        { nome: "Panturrilha sentada (sóleo)", series: "3x15", carga: "30kg", obs: "Músculo diferente do gêmeo. Trabalha o sóleo com joelho a 90°." }
+        { nome: "Panturrilha em pé unilateral", series: "4x15 cada", obs: "Com halter. Alonga bem abaixo." },
+        { nome: "Panturrilha sentada (sóleo)", series: "3x15", obs: "Joelho a 90°." }
       ]}
     ]
   },
-  D: { nome: "DIA D — Legs 2", foco: "Posterior · Glúteo · Panturrilha", cor: "#FB923C", bg: "#1e0d00",
+  C: { nome: "DIA C — Upper 2", foco: "Costas · Peito · Ombro · Braços", cor: "#4ADE80", bg: "#0a1e0f",
     grupos: [
       { nome: "🔥 AQUECIMENTO", itens: [
-        { nome: "Glute bridge com peso corporal", series: "2x20", obs: "Ativa glúteo antes de qualquer carga. Fundamental." },
-        { nome: "Mesa flexora com 40% da carga", series: "2x15", obs: "Aquece tendões e isquiotibiais gradualmente." }
+        { nome: "Face pull na polia (leve)", series: "2x15", obs: "Ativa posteriores e manguito." }
+      ]},
+      { nome: "🏋️ COSTAS (FOCO DETALHADO)", itens: [
+        { nome: "Remada curvada unilateral com halter", series: "4x10-12 cada", obs: "Apoio no banco. Puxa em direção ao quadril. Gira tronco." },
+        { nome: "Pull-over na polia", series: "3x12", obs: "Braços quase estendidos. Lateral do dorsal." },
+        { nome: "Face pull na polia (carga progressiva)", series: "3x15", obs: "Posteriores e manguito. Progressão obrigatória." }
+      ]},
+      { nome: "🎯 PEITO E OMBRO (MANUTENÇÃO)", itens: [
+        { nome: "Supino reto com halteres", series: "3x10-12", obs: "Mantém estímulo semanal. Desce 3s." },
+        { nome: "Elevação lateral inclinada no banco", series: "3x15", obs: "Banco 30°. Enfatiza deltóide médio posterior." }
+      ]},
+      { nome: "💪 BRAÇOS", itens: [
+        { nome: "Rosca direta na polia", series: "3x12", obs: "Cotovelo fixo. Tensão constante." },
+        { nome: "Tríceps pulley com corda (polia alta)", series: "3x15", obs: "Isola lateral e medial." }
+      ]}
+    ]
+  },
+  D: { nome: "DIA D — Lower 2", foco: "Glúteo · Quad · Posterior · Panturrilha", cor: "#FB923C", bg: "#1e0d00",
+    grupos: [
+      { nome: "🔥 AQUECIMENTO", itens: [
+        { nome: "Glute bridge", series: "2x20", obs: "Ativa glúteo." },
+        { nome: "Mesa flexora 40%", series: "2x15", obs: "Aquece isquiotibiais." }
       ]},
       { nome: "🍑 GLÚTEO", itens: [
-        { nome: "Hip thrust com barra ou halter", series: "4x12", obs: "Pausa de 2s no topo contraindo forte. Queixo no peito, não arqueia lombar." },
-        { nome: "Cadeira abdutora", series: "4x15", carga: "45–55kg", obs: "Glúteo médio — define a lateral. Não balança o tronco." },
-        { nome: "Elevação unilateral glúteo na polia", series: "3x15 cada", obs: "Foca na contração máxima no topo." }
+        { nome: "Hip thrust com barra", series: "4x12", obs: "Pausa 2s no topo. Queixo no peito." },
+        { nome: "Cadeira abdutora", series: "3x15", obs: "Glúteo médio. Tronco firme." }
       ]},
-      { nome: "🦵 POSTERIOR DE COXA", itens: [
-        { nome: "Mesa flexora unilateral", series: "4x12 cada", carga: "20kg (4 placas)", obs: "Unilateral corrige assimetrias. Descida lenta 3s." },
-        { nome: "Mesa flexora bilateral", series: "3x15", carga: "55kg (11 placas)", obs: "Finalizador com carga maior. Contrai forte no topo, pausa 1s." },
-        { nome: "Stiff com halteres (Romanian Deadlift)", series: "3x12", obs: "Quadril vai pra trás, não dobra joelho. Define transição glúteo-posterior." }
+      { nome: "🦵 QUADRÍCEPS + GLÚTEO", itens: [
+        { nome: "Afundo búlgaro (pé de trás no banco)", series: "3x10-12 cada", obs: "Desce controlado. Joelho alinhado. Estimula quad e glúteo." }
       ]},
-      { nome: "🦵 ADUTOR", itens: [
-        { nome: "Máquina adutora", series: "3x12", carga: "25kg", obs: "Controla a abertura — não deixa abrir demais." }
+      { nome: "🏋️ POSTERIOR", itens: [
+        { nome: "Mesa flexora", series: "4x10-12", obs: "Desce 3s. Pausa no topo." }
       ]},
       { nome: "🦶 PANTURRILHA", itens: [
-        { nome: "Panturrilha no leg press", series: "3x20", obs: "Ângulo diferente pra variar o estímulo do gêmeo." }
+        { nome: "Panturrilha no leg press", series: "3x20", obs: "Pés afastados. Joelhos estendidos." }
       ]}
     ]
   }
 };
 
 var CARDIO = {
-  A: { tipo: "LISS", tempo: "20 min", desc: "Esteira inclinada 6–8% ou elíptico — intensidade leve" },
-  B: { tipo: "LISS", tempo: "20 min", desc: "Esteira inclinada ou bicicleta ergométrica — intensidade leve" },
-  C: { tipo: "Opcional", tempo: "15 min", desc: "Após quad pesado: só caminhada leve ou descanso total" },
-  D: { tipo: "Opcional", tempo: "15 min", desc: "Bicicleta leve se tiver energia, senão descansa" }
+  A: { tipo: "LISS", tempo: "20 min", desc: "Esteira inclinada 6-8% ou elíptico" },
+  B: { tipo: "Opcional", tempo: "15 min", desc: "Caminhada leve se estiver bem" },
+  C: { tipo: "LISS", tempo: "20 min", desc: "Bicicleta ou esteira, intensidade baixa" },
+  D: { tipo: "Opcional", tempo: "15 min", desc: "Caminhada ou descanso total" }
 };
 
 var ROTACAO = [
-  { dia: "Segunda", treino: "Dia A — Push", cor: "#C084FC" },
-  { dia: "Terça", treino: "Dia B — Pull", cor: "#38BDF8" },
+  { dia: "Segunda", treino: "Dia A — Upper 1", cor: "#C084FC" },
+  { dia: "Terça", treino: "Dia B — Lower 1", cor: "#38BDF8" },
   { dia: "Quarta", treino: "Descanso ativo", cor: "#ffffff30" },
-  { dia: "Quinta", treino: "Dia C — Legs 1", cor: "#4ADE80" },
-  { dia: "Sexta", treino: "Dia D — Legs 2", cor: "#FB923C" },
+  { dia: "Quinta", treino: "Dia C — Upper 2", cor: "#4ADE80" },
+  { dia: "Sexta", treino: "Dia D — Lower 2", cor: "#FB923C" },
   { dia: "Sáb/Dom", treino: "Descanso", cor: "#ffffff20" }
 ];
 
@@ -294,10 +294,18 @@ var currentAno = new Date().getFullYear();
 var modalDate = null;
 var gruposState = {};
 var registro = {};
-try { registro = JSON.parse(localStorage.getItem('treino_reg') || '{}'); } catch(e) {}
+var cargas = {};
+
+try {
+  registro = JSON.parse(localStorage.getItem('treino_reg') || '{}');
+  cargas = JSON.parse(localStorage.getItem('treino_cargas') || '{}');
+} catch(e) {}
 
 function salvar() {
-  try { localStorage.setItem('treino_reg', JSON.stringify(registro)); } catch(e) {}
+  try {
+    localStorage.setItem('treino_reg', JSON.stringify(registro));
+    localStorage.setItem('treino_cargas', JSON.stringify(cargas));
+  } catch(e) {}
 }
 
 function selectDay(d) {
@@ -317,6 +325,7 @@ function renderTreino() {
     + '<div class="treino-eyebrow" style="color:' + t.cor + '">' + t.foco + '</div>'
     + '<div class="treino-title">' + t.nome + '</div></div>';
 
+  var globalIdx = 0;
   t.grupos.forEach(function(g, gi) {
     var key = currentDay + '-' + gi;
     var aberto = gruposState[key] !== false;
@@ -324,17 +333,23 @@ function renderTreino() {
       + '<span>' + g.nome + '</span><span style="color:#ffffff30">' + (aberto ? '▲' : '▼') + '</span></button>'
       + '<div class="grupo-content' + (aberto ? '' : ' hidden') + '" id="gc-' + key + '">';
     g.itens.forEach(function(ex) {
+      var cargaKey = currentDay + '-' + globalIdx;
+      var cargaSalva = cargas[cargaKey] || '';
       html += '<div class="ex-card"><div class="ex-top"><div class="ex-nome">' + ex.nome + '</div>'
         + '<div class="ex-series" style="background:' + t.cor + '22;color:' + t.cor + '">' + ex.series + '</div></div>'
-        + (ex.carga ? '<div class="ex-carga" style="color:' + t.cor + 'cc">⚖️ ' + ex.carga + '</div>' : '')
         + (ex.obs ? '<div class="ex-obs">💡 ' + ex.obs + '</div>' : '')
+        + '<div class="ex-carga-container">'
+        + '<span class="ex-carga-label">⚖️ </span>'
+        + '<input type="text" class="ex-carga-input" placeholder="Carga (kg)" value="' + cargaSalva + '" data-key="' + cargaKey + '" onchange="salvarCarga(this)" />'
+        + '</div>'
         + '</div>';
+      globalIdx++;
     });
     html += '</div></div>';
   });
 
-  html += '<div class="ab-card"><div class="ab-title">🧘 ABDÔMEN (qualquer dia)</div>'
-    + '<div class="ab-text">Prancha isométrica 3x30–45s + vacuum 3x30s. Nada com carga ou flexão de tronco.</div></div>';
+  html += '<div class="ab-card"><div class="ab-title">🧘 ABDÔMEN (2-3x/semana pós-treino)</div>'
+    + '<div class="ab-text">Prancha com sobrecarga 3x30-45s, Crunch na polia 3x12-15, Vacuum 3x30s. Progressão de carga é bem-vinda.</div></div>';
 
   html += '<div class="cardio-card" style="background:#111;border:1px solid ' + t.cor + '35">'
     + '<div class="cardio-top"><div class="cardio-title">🏃 CARDIO</div><div class="cardio-badges">'
@@ -348,9 +363,15 @@ function renderTreino() {
       + '<span class="rotacao-dia">' + r.dia + '</span>'
       + '<span class="rotacao-treino" style="color:' + r.cor + '">' + r.treino + '</span></div>';
   });
-  html += '</div><div class="tip-card">⚡ Descanso: 45–60s nos isolamentos, 60–90s nos compostos. Descida sempre em 2–3s — é aí que o shape é construído.</div>';
+  html += '</div><div class="tip-card">⚡ Descanso: 45-60s isoladores, 60-90s compostos. Foco na fase excêntrica (2-3s).</div>';
 
   document.getElementById('treino-content').innerHTML = html;
+}
+
+function salvarCarga(input) {
+  var key = input.getAttribute('data-key');
+  cargas[key] = input.value;
+  salvar();
 }
 
 function toggleGrupo(key) {
