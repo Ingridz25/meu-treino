@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Meu Treino">
+<meta name="theme-color" content="#0d0d0d">
+<title>Meu Treino</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter', system-ui, sans-serif; min-height: 100vh; padding-bottom: 80px; }
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #111; border-top: 1px solid #222; display: flex; z-index: 100; }
+.nav-btn { flex: 1; padding: 12px 4px 16px; background: none; border: none; color: #ffffff40; font-size: 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: color 0.2s; }
+.nav-btn.active { color: #C084FC; }
+.nav-icon { font-size: 20px; }
+.page { display: none; padding: 0 0 20px; }
+.page.active { display: block; }
+.header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 48px 20px 20px; border-bottom: 1px solid #ffffff10; }
+.header-eyebrow { color: #ffffff40; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 4px; }
+.header-title { font-size: 22px; font-weight: 700; color: #fff; }
+.header-sub { font-size: 13px; color: #ffffff50; margin-top: 4px; }
+.day-selector { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; padding: 14px 14px 0; }
+.day-btn { background: #1e1e1e; border: 1px solid #333; border-radius: 10px; padding: 10px 4px; font-weight: 700; font-size: 13px; cursor: pointer; color: #ffffff80; transition: all 0.2s; }
+.day-btn.active-a { background: #C084FC; color: #000; border-color: #C084FC; }
+.day-btn.active-b { background: #38BDF8; color: #000; border-color: #38BDF8; }
+.day-btn.active-c { background: #4ADE80; color: #000; border-color: #4ADE80; }
+.day-btn.active-d { background: #FB923C; color: #000; border-color: #FB923C; }
+.content { padding: 14px 14px 0; }
+.treino-header { border-radius: 14px; padding: 14px 16px 10px; margin-bottom: 12px; }
+.treino-eyebrow { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2px; }
+.treino-title { font-size: 18px; font-weight: 700; color: #fff; }
+.grupo { margin-bottom: 10px; }
+.grupo-btn { width: 100%; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; color: #fff; font-size: 13px; font-weight: 600; text-align: left; }
+.grupo-content { padding-top: 4px; }
+.grupo-content.hidden { display: none; }
+.ex-card { background: #141414; border: 1px solid #222; border-radius: 10px; padding: 12px 14px; margin-top: 6px; }
+.ex-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+.ex-nome { font-size: 14px; font-weight: 600; color: #f0f0f0; flex: 1; }
+.ex-series { border-radius: 6px; padding: 3px 8px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.ex-carga { font-size: 12px; font-weight: 600; margin-top: 5px; }
+.ex-obs { font-size: 12px; color: #ffffff45; line-height: 1.4; margin-top: 5px; }
+.ab-card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 12px 14px; margin-top: 4px; }
+.ab-title { font-size: 13px; font-weight: 600; color: #ffffff70; margin-bottom: 4px; }
+.ab-text { font-size: 12px; color: #ffffff45; line-height: 1.5; }
+.cardio-card { border-radius: 10px; padding: 12px 14px; margin-top: 10px; }
+.cardio-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.cardio-title { font-size: 13px; font-weight: 600; color: #ffffff70; }
+.cardio-badges { display: flex; gap: 6px; }
+.badge { border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+.badge-muted { background: #ffffff10; color: #ffffff50; font-weight: 400; }
+.cardio-text { font-size: 12px; color: #ffffff45; line-height: 1.4; }
+.rotacao-card { background: #0f0f0f; border: 1px solid #1e1e1e; border-radius: 10px; padding: 14px; margin-top: 10px; }
+.rotacao-title { font-size: 11px; color: #ffffff30; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+.rotacao-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #1a1a1a; }
+.rotacao-dia { font-size: 13px; color: #ffffff50; }
+.rotacao-treino { font-size: 13px; font-weight: 600; }
+.tip-card { margin-top: 12px; padding: 12px 14px; background: #0f0f0f; border-radius: 10px; border: 1px solid #1a1a1a; font-size: 11px; color: #ffffff25; line-height: 1.6; }
+.freq-header { padding: 14px 14px 0; }
+.stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.stat-card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 12px; padding: 14px 10px; text-align: center; }
+.stat-num { font-size: 26px; font-weight: 700; }
+.stat-label { font-size: 11px; color: #ffffff40; margin-top: 2px; }
+.mes-nav { display: flex; align-items: center; justify-content: space-between; padding: 0 14px; margin-bottom: 10px; }
+.mes-nome { font-size: 16px; font-weight: 700; color: #fff; }
+.mes-btn { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 6px 14px; color: #fff; font-size: 18px; cursor: pointer; }
+.cal-grid { padding: 0 14px; }
+.cal-dias-semana { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-bottom: 4px; }
+.cal-dow { text-align: center; font-size: 10px; color: #ffffff30; padding: 4px 0; font-weight: 600; }
+.cal-cells { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
+.cal-cell { aspect-ratio: 1; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: all 0.15s; }
+.cal-cell.empty { background: transparent; cursor: default; }
+.cal-cell.no-treino { background: #1a1a1a; color: #ffffff40; border-color: #222; }
+.cal-cell.hoje { border-color: #C084FC !important; border-width: 2px !important; }
+.cal-cell.futuro { background: #111; color: #ffffff15; cursor: default; }
+.cal-cell.treino-a { background: #C084FC22; color: #C084FC; border-color: #C084FC44; }
+.cal-cell.treino-b { background: #38BDF822; color: #38BDF8; border-color: #38BDF844; }
+.cal-cell.treino-c { background: #4ADE8022; color: #4ADE80; border-color: #4ADE8044; }
+.cal-cell.treino-d { background: #FB923C22; color: #FB923C; border-color: #FB923C44; }
+.cal-cell.descanso { background: #1e1e1e; color: #ffffff30; }
+.cal-label { font-size: 8px; opacity: 0.8; line-height: 1; }
+.modal-overlay { position: fixed; inset: 0; background: #000000cc; z-index: 200; display: flex; align-items: flex-end; justify-content: center; }
+.modal-overlay.hidden { display: none; }
+.modal { background: #161616; border-radius: 20px 20px 0 0; padding: 20px 20px 40px; width: 100%; max-width: 480px; border-top: 1px solid #2a2a2a; }
+.modal-handle { width: 36px; height: 4px; background: #333; border-radius: 2px; margin: 0 auto 16px; }
+.modal-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.modal-date { font-size: 13px; color: #ffffff50; margin-bottom: 18px; }
+.modal-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.modal-opt { padding: 14px 10px; border-radius: 12px; border: 2px solid transparent; cursor: pointer; text-align: center; font-weight: 700; font-size: 14px; transition: all 0.15s; line-height: 1.4; }
+.modal-opt-a { background: #C084FC22; color: #C084FC; border-color: #C084FC33; }
+.modal-opt-b { background: #38BDF822; color: #38BDF8; border-color: #38BDF833; }
+.modal-opt-c { background: #4ADE8022; color: #4ADE80; border-color: #4ADE8033; }
+.modal-opt-d { background: #FB923C22; color: #FB923C; border-color: #FB923C33; }
+.modal-opt-rest { background: #1e1e1e; color: #ffffff50; border-color: #2a2a2a; }
+.modal-opt-clear { background: #1a1a1a; color: #ffffff30; border-color: #222; }
+.modal-opt.selected { filter: brightness(1.4); border-width: 2px; }
+.modal-cancel { width: 100%; padding: 14px; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 12px; color: #ffffff60; font-size: 14px; cursor: pointer; margin-top: 4px; }
+.legenda { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 14px 0; }
+.leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #ffffff50; }
+.leg-dot { width: 10px; height: 10px; border-radius: 3px; }
+.streak-card { background: linear-gradient(135deg, #1a1a2e, #0d1117); border: 1px solid #C084FC33; border-radius: 14px; padding: 16px; margin: 0 14px 14px; display: flex; align-items: center; gap: 14px; }
+.streak-fire { font-size: 32px; }
+.streak-num { font-size: 28px; font-weight: 700; color: #C084FC; }
+.streak-label { font-size: 12px; color: #ffffff50; }
+</style>
+</head>
+<body>
+
+<div class="page active" id="page-treino">
+  <div class="header">
+    <div class="header-eyebrow">Plano de Treino</div>
+    <div class="header-title">4 dias · Definição &amp; Shape</div>
+    <div class="header-sub">Push · Pull · Legs 1 · Legs 2</div>
+  </div>
+  <div class="day-selector">
+    <button class="day-btn" onclick="selectDay('A')">Dia A</button>
+    <button class="day-btn" onclick="selectDay('B')">Dia B</button>
+    <button class="day-btn" onclick="selectDay('C')">Dia C</button>
+    <button class="day-btn" onclick="selectDay('D')">Dia D</button>
+  </div>
+  <div class="content" id="treino-content"></div>
+</div>
+
+<div class="page" id="page-freq">
+  <div class="header">
+    <div class="header-eyebrow">Registro</div>
+    <div class="header-title">Frequência</div>
+    <div class="header-sub">Toque em um dia para registrar</div>
+  </div>
+  <div class="freq-header">
+    <div class="stats-row" id="stats-row"></div>
+  </div>
+  <div class="streak-card" id="streak-card"></div>
+  <div class="mes-nav">
+    <button class="mes-btn" onclick="mudarMes(-1)">&#8249;</button>
+    <div class="mes-nome" id="mes-nome"></div>
+    <button class="mes-btn" onclick="mudarMes(1)">&#8250;</button>
+  </div>
+  <div class="cal-grid">
+    <div class="cal-dias-semana">
+      <div class="cal-dow">D</div><div class="cal-dow">S</div><div class="cal-dow">T</div>
+      <div class="cal-dow">Q</div><div class="cal-dow">Q</div><div class="cal-dow">S</div><div class="cal-dow">S</div>
+    </div>
+    <div class="cal-cells" id="cal-cells"></div>
+  </div>
+  <div class="legenda">
+    <div class="leg-item"><div class="leg-dot" style="background:#C084FC"></div>Dia A</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#38BDF8"></div>Dia B</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#4ADE80"></div>Dia C</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#FB923C"></div>Dia D</div>
+    <div class="leg-item"><div class="leg-dot" style="background:#2a2a2a"></div>Descanso</div>
+  </div>
+</div>
+
+<div class="modal-overlay hidden" id="modal">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-date" id="modal-date"></div>
+    <div class="modal-options">
+      <div class="modal-opt modal-opt-a" onclick="registrar('A')">&#128170; Dia A<br><span style="font-size:11px;font-weight:400">Push</span></div>
+      <div class="modal-opt modal-opt-b" onclick="registrar('B')">&#127947; Dia B<br><span style="font-size:11px;font-weight:400">Pull</span></div>
+      <div class="modal-opt modal-opt-c" onclick="registrar('C')">&#129461; Dia C<br><span style="font-size:11px;font-weight:400">Legs 1</span></div>
+      <div class="modal-opt modal-opt-d" onclick="registrar('D')">&#127825; Dia D<br><span style="font-size:11px;font-weight:400">Legs 2</span></div>
+      <div class="modal-opt modal-opt-rest" onclick="registrar('R')">&#128564; Descanso</div>
+      <div class="modal-opt modal-opt-clear" onclick="registrar(null)">&#10005; Limpar</div>
+    </div>
+    <button class="modal-cancel" onclick="fecharModal()">Cancelar</button>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <button class="nav-btn active" id="nav-treino" onclick="showPage('treino')">
+    <span class="nav-icon">&#127947;</span><span>Treino</span>
+  </button>
+  <button class="nav-btn" id="nav-freq" onclick="showPage('freq')">
+    <span class="nav-icon">&#128197;</span><span>Frequência</span>
+  </button>
+</nav>
+
+<script>
+var TREINOS = {
+  A: { nome: "DIA A — Push", foco: "Ombro · Peito · Tríceps", cor: "#C084FC", bg: "#1e0a2e",
+    grupos: [
+      { nome: "🔥 AQUECIMENTO", itens: [
+        { nome: "Rotação de ombro com elástico leve", series: "2x15", obs: "Círculos frente e trás. Ativa manguito rotador antes de qualquer carga." },
+        { nome: "Elevação lateral na polia (50% da carga)", series: "2x15", obs: "Aquecimento específico do deltóide lateral." }
+      ]},
+      { nome: "🎯 OMBROS — PRIORIDADE", itens: [
+        { nome: "Elevação lateral na polia (unilateral)", series: "4x15", carga: "5kg", obs: "Cotovelo levemente flexionado, sobe até a linha do ombro. Pausa 1s no topo. Tensão constante é o que define o deltóide médio." },
+        { nome: "Desenvolvimento com halteres (sentado)", series: "4x10–12", obs: "Cotovelos a 90° no início. Não trava no topo. Controla a descida em 3s." },
+        { nome: "Elevação frontal com halter (unilateral)", series: "3x12 cada", carga: "2kg cada lado", obs: "Leve e controlado. Ombro anterior já trabalha no chest press." }
+      ]},
+      { nome: "💪 PEITO", itens: [
+        { nome: "Chest press na máquina (sentado)", series: "4x12", carga: "25kg", obs: "Retrai a escápula antes de empurrar. Controla a volta em 3s." },
+        { nome: "Crucifixo na máquina", series: "3x15", carga: "35–40kg", obs: "Amplitude total, pausa 1s no fechamento. Define separação do peitoral." },
+        { nome: "Crucifixo inverso na máquina", series: "3x15", carga: "10–15kg", obs: "Posterior do ombro — importante pro equilíbrio e postura." }
+      ]},
+      { nome: "🔱 TRÍCEPS — DEFINIÇÃO", itens: [
+        { nome: "Tríceps pulley com corda (polia alta)", series: "4x15", carga: "20kg", obs: "Supina o pulso no final de cada rep — isso separa as duas cabeças e define a ferradura. Foca na contração total." },
+        { nome: "Tríceps corda unilateral (polia alta)", series: "3x12 cada", obs: "Unilateral no final pra equalizar força entre os lados." }
+      ]}
+    ]
+  },
+  B: { nome: "DIA B — Pull", foco: "Costas · Bíceps · Antebraço", cor: "#38BDF8", bg: "#0a1e2e",
+    grupos: [
+      { nome: "🔥 AQUECIMENTO", itens: [
+        { nome: "Face pull na polia com corda", series: "2x15", obs: "Ativa posteriores do ombro. Fundamental antes de puxada." },
+        { nome: "Puxada alta com 40% da carga", series: "2x10", obs: "Aquecimento articular da glenoumeral." }
+      ]},
+      { nome: "🏋️ COSTAS — LARGURA", itens: [
+        { nome: "Puxada alta aberta (pegada pronada)", series: "4x10–12", carga: "55–59kg", obs: "Cotovelo aponta pro chão no final. Foca em latíssimo. Controla a subida." },
+        { nome: "Gravitron / barra assistida (supinada)", series: "3x10", carga: "20kg contrapeso", obs: "Pegada supinada ativa mais bíceps e porção inferior do dorsal." }
+      ]},
+      { nome: "🏋️ COSTAS — ESPESSURA", itens: [
+        { nome: "Remada baixa na polia", series: "4x12", carga: "40–50kg", obs: "Retrai escápula antes de puxar. Pausa 1s no topo. Controla a volta em 3s." },
+        { nome: "Pull-over na polia ou halter no banco", series: "3x12", obs: "Define o shape lateral do dorsal. Muito eficiente e subestimado." }
+      ]},
+      { nome: "💪 BÍCEPS", itens: [
+        { nome: "Rosca direta na polia", series: "4x12", carga: "10kg", obs: "Tensão constante do início ao fim. Cotovelo fixo no corpo. Desce devagar." },
+        { nome: "Rosca martelo com halteres", series: "3x12", obs: "Define braquial e dá espessura no braço." },
+        { nome: "Rosca concentrada com halter", series: "3x12 cada", obs: "Pico do bíceps. Contrai forte no topo, desce em 3s." }
+      ]},
+      { nome: "🖐️ ANTEBRAÇO", itens: [
+        { nome: "Rosca inversa na polia", series: "3x15", carga: "3kg", obs: "Carga certa pra esse músculo. Não aumenta." },
+        { nome: "Rosca de punho (wrist curl) na polia", series: "3x15", carga: "12–14kg", obs: "Amplitude total — vai bem pra baixo. Define o antebraço." }
+      ]}
+    ]
+  },
+  C: { nome: "DIA C — Legs 1", foco: "Quadríceps · Panturrilha", cor: "#4ADE80", bg: "#0a1e0f",
+    grupos: [
+      { nome: "🔥 AQUECIMENTO", itens: [
+        { nome: "Agachamento livre sem peso (bastão)", series: "2x15", obs: "Ativa padrão de movimento antes de adicionar carga." },
+        { nome: "Leg press unilateral com 30% da carga", series: "2x10 cada", obs: "Aquecimento articular do joelho e quadril." }
+      ]},
+      { nome: "🦵 QUADRÍCEPS", itens: [
+        { nome: "Agachamento livre", series: "4x10–12", carga: "30kg total", obs: "Profundidade abaixo dos 90°. Joelhos acompanham os pés. Descida em 3s." },
+        { nome: "Leg press unilateral", series: "4x12 cada", carga: "7 placas", obs: "Unilateral detecta e corrige assimetrias. Não trava o joelho no topo." },
+        { nome: "Cadeira extensora", series: "4x15", carga: "80–85kg", obs: "Ênfase nos últimos 30° de extensão — ativa o vasto medial (a gota acima do joelho). Pausa 2s no topo." }
+      ]},
+      { nome: "🦶 PANTURRILHA", itens: [
+        { nome: "Panturrilha em pé unilateral (step ou máquina)", series: "4x15 cada", carga: "10–15kg halter", obs: "Adiciona carga — sem peso o estímulo é insuficiente. Calcanhar bem abaixo do step. Pausa 1s no topo." },
+        { nome: "Panturrilha sentada (sóleo)", series: "3x15", carga: "30kg", obs: "Músculo diferente do gêmeo. Trabalha o sóleo com joelho a 90°." }
+      ]}
+    ]
+  },
+  D: { nome: "DIA D — Legs 2", foco: "Posterior · Glúteo · Panturrilha", cor: "#FB923C", bg: "#1e0d00",
+    grupos: [
+      { nome: "🔥 AQUECIMENTO", itens: [
+        { nome: "Glute bridge com peso corporal", series: "2x20", obs: "Ativa glúteo antes de qualquer carga. Fundamental." },
+        { nome: "Mesa flexora com 40% da carga", series: "2x15", obs: "Aquece tendões e isquiotibiais gradualmente." }
+      ]},
+      { nome: "🍑 GLÚTEO", itens: [
+        { nome: "Hip thrust com barra ou halter", series: "4x12", obs: "Pausa de 2s no topo contraindo forte. Queixo no peito, não arqueia lombar." },
+        { nome: "Cadeira abdutora", series: "4x15", carga: "45–55kg", obs: "Glúteo médio — define a lateral. Não balança o tronco." },
+        { nome: "Elevação unilateral glúteo na polia", series: "3x15 cada", obs: "Foca na contração máxima no topo." }
+      ]},
+      { nome: "🦵 POSTERIOR DE COXA", itens: [
+        { nome: "Mesa flexora unilateral", series: "4x12 cada", carga: "20kg (4 placas)", obs: "Unilateral corrige assimetrias. Descida lenta 3s." },
+        { nome: "Mesa flexora bilateral", series: "3x15", carga: "55kg (11 placas)", obs: "Finalizador com carga maior. Contrai forte no topo, pausa 1s." },
+        { nome: "Stiff com halteres (Romanian Deadlift)", series: "3x12", obs: "Quadril vai pra trás, não dobra joelho. Define transição glúteo-posterior." }
+      ]},
+      { nome: "🦵 ADUTOR", itens: [
+        { nome: "Máquina adutora", series: "3x12", carga: "25kg", obs: "Controla a abertura — não deixa abrir demais." }
+      ]},
+      { nome: "🦶 PANTURRILHA", itens: [
+        { nome: "Panturrilha no leg press", series: "3x20", obs: "Ângulo diferente pra variar o estímulo do gêmeo." }
+      ]}
+    ]
+  }
+};
+
+var CARDIO = {
+  A: { tipo: "LISS", tempo: "20 min", desc: "Esteira inclinada 6–8% ou elíptico — intensidade leve" },
+  B: { tipo: "LISS", tempo: "20 min", desc: "Esteira inclinada ou bicicleta ergométrica — intensidade leve" },
+  C: { tipo: "Opcional", tempo: "15 min", desc: "Após quad pesado: só caminhada leve ou descanso total" },
+  D: { tipo: "Opcional", tempo: "15 min", desc: "Bicicleta leve se tiver energia, senão descansa" }
+};
+
+var ROTACAO = [
+  { dia: "Segunda", treino: "Dia A — Push", cor: "#C084FC" },
+  { dia: "Terça", treino: "Dia B — Pull", cor: "#38BDF8" },
+  { dia: "Quarta", treino: "Descanso ativo", cor: "#ffffff30" },
+  { dia: "Quinta", treino: "Dia C — Legs 1", cor: "#4ADE80" },
+  { dia: "Sexta", treino: "Dia D — Legs 2", cor: "#FB923C" },
+  { dia: "Sáb/Dom", treino: "Descanso", cor: "#ffffff20" }
+];
+
+var MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+var currentDay = 'A';
+var currentMes = new Date().getMonth();
+var currentAno = new Date().getFullYear();
+var modalDate = null;
+var gruposState = {};
+var registro = {};
+try { registro = JSON.parse(localStorage.getItem('treino_reg') || '{}'); } catch(e) {}
+
+function salvar() {
+  try { localStorage.setItem('treino_reg', JSON.stringify(registro)); } catch(e) {}
+}
+
+function selectDay(d) {
+  currentDay = d;
+  gruposState = {};
+  var btns = document.querySelectorAll('.day-btn');
+  btns[0].className = 'day-btn'; btns[1].className = 'day-btn';
+  btns[2].className = 'day-btn'; btns[3].className = 'day-btn';
+  btns[['A','B','C','D'].indexOf(d)].className = 'day-btn active-' + d.toLowerCase();
+  renderTreino();
+}
+
+function renderTreino() {
+  var t = TREINOS[currentDay];
+  var c = CARDIO[currentDay];
+  var html = '<div class="treino-header" style="background:' + t.bg + ';border:1px solid ' + t.cor + '25">'
+    + '<div class="treino-eyebrow" style="color:' + t.cor + '">' + t.foco + '</div>'
+    + '<div class="treino-title">' + t.nome + '</div></div>';
+
+  t.grupos.forEach(function(g, gi) {
+    var key = currentDay + '-' + gi;
+    var aberto = gruposState[key] !== false;
+    html += '<div class="grupo"><button class="grupo-btn" onclick="toggleGrupo(\'' + key + '\')">'
+      + '<span>' + g.nome + '</span><span style="color:#ffffff30">' + (aberto ? '▲' : '▼') + '</span></button>'
+      + '<div class="grupo-content' + (aberto ? '' : ' hidden') + '" id="gc-' + key + '">';
+    g.itens.forEach(function(ex) {
+      html += '<div class="ex-card"><div class="ex-top"><div class="ex-nome">' + ex.nome + '</div>'
+        + '<div class="ex-series" style="background:' + t.cor + '22;color:' + t.cor + '">' + ex.series + '</div></div>'
+        + (ex.carga ? '<div class="ex-carga" style="color:' + t.cor + 'cc">⚖️ ' + ex.carga + '</div>' : '')
+        + (ex.obs ? '<div class="ex-obs">💡 ' + ex.obs + '</div>' : '')
+        + '</div>';
+    });
+    html += '</div></div>';
+  });
+
+  html += '<div class="ab-card"><div class="ab-title">🧘 ABDÔMEN (qualquer dia)</div>'
+    + '<div class="ab-text">Prancha isométrica 3x30–45s + vacuum 3x30s. Nada com carga ou flexão de tronco.</div></div>';
+
+  html += '<div class="cardio-card" style="background:#111;border:1px solid ' + t.cor + '35">'
+    + '<div class="cardio-top"><div class="cardio-title">🏃 CARDIO</div><div class="cardio-badges">'
+    + '<span class="badge" style="background:' + t.cor + '22;color:' + t.cor + '">' + c.tipo + '</span>'
+    + '<span class="badge badge-muted">' + c.tempo + '</span></div></div>'
+    + '<div class="cardio-text">' + c.desc + '</div></div>';
+
+  html += '<div class="rotacao-card"><div class="rotacao-title">Rotação semanal</div>';
+  ROTACAO.forEach(function(r, i) {
+    html += '<div class="rotacao-row"' + (i === ROTACAO.length-1 ? ' style="border-bottom:none"' : '') + '>'
+      + '<span class="rotacao-dia">' + r.dia + '</span>'
+      + '<span class="rotacao-treino" style="color:' + r.cor + '">' + r.treino + '</span></div>';
+  });
+  html += '</div><div class="tip-card">⚡ Descanso: 45–60s nos isolamentos, 60–90s nos compostos. Descida sempre em 2–3s — é aí que o shape é construído.</div>';
+
+  document.getElementById('treino-content').innerHTML = html;
+}
+
+function toggleGrupo(key) {
+  gruposState[key] = gruposState[key] === false ? true : false;
+  var el = document.getElementById('gc-' + key);
+  var btn = el.previousElementSibling.querySelector('span:last-child');
+  if (gruposState[key] === false) { el.classList.add('hidden'); btn.textContent = '▼'; }
+  else { el.classList.remove('hidden'); btn.textContent = '▲'; }
+}
+
+function renderFreq() {
+  renderStats(); renderStreak(); renderCalendario();
+}
+
+function renderStats() {
+  var hoje = new Date();
+  var totalMes = 0, totalAno = 0, totalGeral = 0;
+  Object.keys(registro).forEach(function(k) {
+    var v = registro[k];
+    if (!v || v === 'R') return;
+    totalGeral++;
+    var parts = k.split('-');
+    var y = parseInt(parts[0]), m = parseInt(parts[1]);
+    if (y === hoje.getFullYear()) totalAno++;
+    if (y === hoje.getFullYear() && m === hoje.getMonth()) totalMes++;
+  });
+  document.getElementById('stats-row').innerHTML =
+    '<div class="stat-card"><div class="stat-num" style="color:#4ADE80">' + totalMes + '</div><div class="stat-label">Este mês</div></div>' +
+    '<div class="stat-card"><div class="stat-num" style="color:#38BDF8">' + totalAno + '</div><div class="stat-label">Este ano</div></div>' +
+    '<div class="stat-card"><div class="stat-num" style="color:#C084FC">' + totalGeral + '</div><div class="stat-label">Total</div></div>';
+}
+
+function renderStreak() {
+  var hoje = new Date();
+  var streak = 0;
+  var d = new Date(hoje);
+  for (var i = 0; i < 365; i++) {
+    var k = dateKey(d);
+    if (registro[k] && registro[k] !== 'R') { streak++; d.setDate(d.getDate()-1); }
+    else break;
+  }
+  document.getElementById('streak-card').innerHTML =
+    '<div class="streak-fire">🔥</div><div><div class="streak-num">' + streak + ' dia' + (streak !== 1 ? 's' : '') + '</div>'
+    + '<div class="streak-label">sequência atual de treinos</div></div>';
+}
+
+function renderCalendario() {
+  document.getElementById('mes-nome').textContent = MESES[currentMes] + ' ' + currentAno;
+  var hoje = new Date();
+  var primeiroDia = new Date(currentAno, currentMes, 1).getDay();
+  var diasNoMes = new Date(currentAno, currentMes+1, 0).getDate();
+  var html = '';
+  for (var i = 0; i < primeiroDia; i++) html += '<div class="cal-cell empty"></div>';
+  for (var d = 1; d <= diasNoMes; d++) {
+    var dt = new Date(currentAno, currentMes, d);
+    var k = dateKey(dt);
+    var isHoje = dt.toDateString() === hoje.toDateString();
+    var isFuturo = dt > hoje;
+    var val = registro[k];
+    var cls = 'cal-cell ';
+    var lbl = '';
+    if (isFuturo) cls += 'futuro';
+    else if (!val) cls += 'no-treino';
+    else if (val === 'R') { cls += 'descanso'; lbl = '😴'; }
+    else { cls += 'treino-' + val.toLowerCase(); lbl = val; }
+    if (isHoje) cls += ' hoje';
+    var onclick = isFuturo ? '' : 'onclick="abrirModal(\'' + k + '\',' + d + ')"';
+    html += '<div class="' + cls + '" ' + onclick + '><span>' + d + '</span>'
+      + (lbl ? '<span class="cal-label">' + lbl + '</span>' : '') + '</div>';
+  }
+  document.getElementById('cal-cells').innerHTML = html;
+}
+
+function mudarMes(dir) {
+  currentMes += dir;
+  if (currentMes > 11) { currentMes = 0; currentAno++; }
+  if (currentMes < 0) { currentMes = 11; currentAno--; }
+  renderCalendario();
+}
+
+function dateKey(d) {
+  return d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
+}
+
+function abrirModal(key, dia) {
+  modalDate = key;
+  var val = registro[key];
+  document.getElementById('modal-title').textContent = 'Dia ' + dia + ' de ' + MESES[currentMes];
+  document.getElementById('modal-date').textContent = val ? ('Registrado: ' + (val === 'R' ? 'Descanso' : 'Dia ' + val)) : 'Sem registro';
+  document.querySelectorAll('.modal-opt').forEach(function(el) { el.classList.remove('selected'); });
+  if (val) { var map = {A:0,B:1,C:2,D:3,R:4}; if (map[val] !== undefined) document.querySelectorAll('.modal-opt')[map[val]].classList.add('selected'); }
+  document.getElementById('modal').classList.remove('hidden');
+}
+
+function fecharModal() {
+  document.getElementById('modal').classList.add('hidden');
+  modalDate = null;
+}
+
+function registrar(val) {
+  if (!modalDate) return;
+  if (val === null) delete registro[modalDate];
+  else registro[modalDate] = val;
+  salvar(); fecharModal(); renderFreq();
+}
+
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) fecharModal();
+});
+
+function showPage(p) {
+  document.querySelectorAll('.page').forEach(function(el) { el.classList.remove('active'); });
+  document.querySelectorAll('.nav-btn').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById('page-' + p).classList.add('active');
+  document.getElementById('nav-' + p).classList.add('active');
+  if (p === 'freq') renderFreq();
+}
+
+selectDay('A');
+</script>
+</body>
+</html>
