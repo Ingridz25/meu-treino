@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Meu Treino">
 <meta name="theme-color" content="#0d0d0d">
-<title>Meu Treino · Upper/Lower 2x</title>
+<title>Meu Treino · Avançado Clínico V2</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter', system-ui, sans-serif; min-height: 100vh; padding-bottom: 80px; }
@@ -39,14 +39,13 @@ body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter',
 .ex-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
 .ex-nome { font-size: 14px; font-weight: 600; color: #f0f0f0; flex: 1; }
 .ex-series { border-radius: 6px; padding: 3px 8px; font-size: 12px; font-weight: 700; white-space: nowrap; }
-.ex-obs { font-size: 12px; color: #ffffff45; line-height: 1.4; margin-top: 5px; }
-.ex-carga-container { margin-top: 6px; display: flex; align-items: center; gap: 6px; }
+.ex-obs { font-size: 12px; color: #ffffffb0; line-height: 1.4; margin-top: 5px; }
+.ex-carga-container { margin-top: 0; display: flex; align-items: center; gap: 6px; flex: 1; }
 .ex-carga-label { font-size: 12px; color: #ffffff60; }
 .ex-carga-input { background: #1e1e1e; border: 1px solid #333; border-radius: 6px; padding: 5px 10px; font-size: 13px; color: #f0f0f0; width: 100%; outline: none; font-family: inherit; }
-.ex-carga-input::placeholder { color: #ffffff30; }
 .ab-card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 12px 14px; margin-top: 4px; }
 .ab-title { font-size: 13px; font-weight: 600; color: #ffffff70; margin-bottom: 4px; }
-.ab-text { font-size: 12px; color: #ffffff45; line-height: 1.5; }
+.ab-text { font-size: 12px; color: #ffffff70; line-height: 1.5; }
 .cardio-card { border-radius: 10px; padding: 12px 14px; margin-top: 10px; }
 .cardio-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
 .cardio-title { font-size: 13px; font-weight: 600; color: #ffffff70; }
@@ -59,7 +58,7 @@ body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter',
 .rotacao-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #1a1a1a; }
 .rotacao-dia { font-size: 13px; color: #ffffff50; }
 .rotacao-treino { font-size: 13px; font-weight: 600; }
-.tip-card { margin-top: 12px; padding: 12px 14px; background: #0f0f0f; border-radius: 10px; border: 1px solid #1a1a1a; font-size: 11px; color: #ffffff25; line-height: 1.6; }
+.tip-card { margin-top: 12px; padding: 12px 14px; background: #0f0f0f; border-radius: 10px; border: 1px solid #1a1a1a; font-size: 11px; color: #ffffff60; line-height: 1.6; }
 .backup-card { margin-top: 12px; padding: 14px; background: #0f0f0f; border-radius: 10px; border: 1px solid #1a1a1a; }
 .backup-title { font-size: 11px; color: #ffffff30; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
 .backup-btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -119,9 +118,9 @@ body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter',
 
 <div class="page active" id="page-treino">
   <div class="header">
-    <div class="header-eyebrow">Plano de Treino</div>
-    <div class="header-title">Upper/Lower 2x · Equilibrado</div>
-    <div class="header-sub">A: Upper 1 · B: Lower 1 · C: Upper 2 · D: Lower 2</div>
+    <div class="header-eyebrow">Auditoria Cinesiológica</div>
+    <div class="header-title">Upper/Lower 2x · Estrutural</div>
+    <div class="header-sub">Foco: Hipertrofia Avançada & Reabilitação Funcional</div>
   </div>
   <div class="day-selector">
     <button class="day-btn" onclick="selectDay('A')">Dia A</button>
@@ -135,7 +134,7 @@ body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter',
 <div class="page" id="page-freq">
   <div class="header">
     <div class="header-eyebrow">Registro</div>
-    <div class="header-title">Frequência</div>
+    <div class="header-title">Frequência Clínico</div>
     <div class="header-sub">Toque em um dia para registrar</div>
   </div>
   <div class="freq-header">
@@ -161,16 +160,15 @@ body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter',
     <div class="leg-item"><div class="leg-dot" style="background:#FB923C"></div>Dia D</div>
     <div class="leg-item"><div class="leg-dot" style="background:#2a2a2a"></div>Descanso</div>
   </div>
-  <!-- Backup / Exportação -->
   <div style="padding: 14px;">
     <div class="backup-card">
-      <div class="backup-title">💾 Backup dos dados</div>
+      <div class="backup-title">💾 Backup Clínico</div>
       <div class="backup-btn-row">
         <button class="backup-btn export" onclick="exportarDados()">⬇️ Exportar</button>
         <button class="backup-btn import" onclick="document.getElementById('import-file').click()">⬆️ Importar</button>
         <button class="backup-btn clear" onclick="confirmarLimpar()">🗑️ Limpar</button>
       </div>
-      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importarDados(event)" />
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importDados(event)" />
     </div>
   </div>
 </div>
@@ -203,110 +201,111 @@ body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter',
 
 <script>
 var TREINOS = {
-  A: { nome: "DIA A — Upper 1", foco: "Peito · Costas · Ombro · Braços", cor: "#C084FC", bg: "#1e0a2e",
+  A: { nome: "DIA A — Upper 1 (Protetor Acromial)", foco: "Largura Costas · Peito Seguro · Cadência Controlada", cor: "#C084FC", bg: "#1e0a2e",
     grupos: [
-      { nome: "🔥 AQUECIMENTO", itens: [
-        { nome: "Rotação de ombro com elástico", series: "2x15", obs: "Círculos frente e trás." },
-        { nome: "Puxada alta com 40% carga", series: "2x10", obs: "Aquece articulação do ombro." }
+      { nome: "🔥 PREPARAÇÃO CLÍNICA MANDATÓRIA (12 min)", itens: [
+        { nome: "Liberação de Peitoral Menor e Deltoide Anterior", series: "1 min/lado", obs: "Pressione bolinha de lacrosse contra a parede na porção anterior do ombro." },
+        { nome: "Rolagem de Coluna Torácica no Rolo de Espuma", series: "2 min", obs: "Mantenha braços cruzados no peito, realize extensão torácica segmentar sem estender a lombar." },
+        { nome: "Chin Tucks Cervicais (Decúbito Dorsal)", series: "2x10", obs: "Deitada, empurre a nuca contra o solo simulando um duplo queixo. Segure 5s no ápice." },
+        { nome: "Wall Slides com Rolo de Espuma", series: "2x8", obs: "Deslize antebraços na parede ativando o serrátil. Mantenha as costelas baixas." }
       ]},
-      { nome: "🎯 PEITO (FOCO)", itens: [
-        { nome: "Supino inclinado com halteres (30-45°)", series: "4x8-12", obs: "Peitoral superior. Controla descida 3s." }
+      { nome: "🎯 PEITO (LIMITAÇÃO MECÂNICA)", itens: [
+        { nome: "DB Floor Press (Supino com Halteres no Chão)", series: "4x8-12", obs: "Pegada semi-pronada. Cadência 4-1-1-0. Pare assim que o tríceps tocar o solo. Zera estresse no supraespinal." }
       ]},
-      { nome: "🏋️ COSTAS (LARGURA E ESPESSURA)", itens: [
-        { nome: "Puxada alta aberta pronada", series: "4x10-12", obs: "Cotovelo aponta pro chão. Controla subida." },
-        { nome: "Remada baixa na polia (pegada neutra)", series: "3x12", obs: "Retrai escápula. Pausa 1s no topo." }
+      { nome: "🏋️ COSTAS (DESCOMPRESSÃO E LARGURA)", itens: [
+        { nome: "Puxada Alta com Triângulo (Pegada Neutra)", series: "4x10-12", obs: "Puxe direcionando o cotovelo ao quadril. Cadência excêntrica de 3s. Evita impacto acromial." },
+        { nome: "Remada Baixa Sentada com Triângulo", series: "3x12", obs: "Retração escapular máxima no final. Pause 1s no ápice da contração sem oscilar o tronco." }
       ]},
-      { nome: "🎯 OMBROS", itens: [
-        { nome: "Desenvolvimento com halteres sentado", series: "3x10-12", obs: "Cotovelos a 90°. Não trava no topo." },
-        { nome: "Elevação lateral na polia unilateral", series: "3x15", obs: "Pausa 1s no topo. Tensão constante." }
+      { nome: "🎯 OMBROS (PLANO ESCAPULAR · RIR 1-2)", itens: [
+        { nome: "Landmine Press Unilateral", series: "3x10-12", obs: "Ajoelhada. Empurre a barra em diagonal para frente. Trajetória anatômica livre de impacto." },
+        { nome: "Scaption (Elevação Lateral no Plano Escapular)", series: "3x12-15", obs: "Halteres leves. Eleve os braços a 30° para frente, polegares apontados para cima. Máximo 90°." }
+      ]},
+      { nome: "💪 BRAÇOS & CONTROLE DE EPICONDILITE", itens: [
+        { nome: "Tríceps Testa no Solo com Halteres", series: "3x10-12", obs: "Deitada no chão. Cotovelos apontados fixos para o teto. Elimina estresse excessivo no ombro." },
+        { nome: "Rosca Martelo com Halteres", series: "3x12", obs: "Pegada neutra constante. Fortalece o braquioradial e protege o tendão conjunto do cotovelo." },
+        { nome: "Wrist Roller Flexo-Extensão de Punho", series: "2x15", obs: "Antebraço totalmente apoiado. Essencial para modulação de dor na epicondilite." }
+      ]
+    }]
+  },
+  B: { nome: "DIA B — Lower 1 (Domínio da Cadeia Posterior)", foco: "Glúteos Máximos · Isquiotibiais · Estabilização Axial", cor: "#38BDF8", bg: "#0a1e2e",
+    grupos: [
+      { nome: "🔥 PREPARAÇÃO CLÍNICA MANDATÓRIA (12 min)", itens: [
+        { nome: "Descompressão de Ponto Gatilho no Piriforme", series: "2 min/lado", obs: "Bolinha de tênis/lacrosse profunda no centro do glúteo. Sustente no ponto de maior dor por 45s." },
+        { nome: "Couch Stretch Alongamento do Psoas", series: "2x30s/lado", obs: "Joelho no chão colado à parede, contraia o glúteo para estirar flexores. Corrige a anteversão pélvica." },
+        { nome: "Liberação Miofascial de Quadríceps no Rolo", series: "2 min", obs: "Deslize o rolo logo acima da patela. Flexione o joelho ativamente nos pontos mais rígidos." },
+        { nome: "Mobilidade de Dorsiflexão de Tornozelo na Parede", series: "2x10/lado", obs: "Avançar joelho à frente sem tirar o calcanhar do chão. Melhora estabilidade profunda." }
+      ]},
+      { nome: "🍑 GLÚTEOS & ISQUIOTIBIAIS (ALINHAMENTO PÉLVICO)", itens: [
+        { nome: "Hip Thrust Elevação Pélvica com Barra", series: "4x10-12", obs: "Queixo no peito, costelas baixas. Segure 2s em contração máxima no topo. Traciona a pelve para o neutro." },
+        { nome: "Stiff Unilateral com Halter (Single-Leg RDL)", series: "3x10-12", obs: "Foco no equilíbrio unipodal. Quadril projeta para trás, joelho de apoio fixo em leve flexão." },
+        { nome: "Leg Press 45 Pés Altos e Afastados", series: "3x10-12", obs: "Posicione calcanhares na borda superior para recrutar posterior. Não trave joelhos na extensão." },
+        { nome: "Cadeira ou Mesa Flexora", series: "3x12-15", obs: "Fase excêntrica de 4 segundos. Fortalecimento excêntrico inibe hipertonia do quadríceps anterior." }
+      ]},
+      { nome: "💡 ESTABILIZAÇÃO PERIFÉRICA & PANTURRILHA", itens: [
+        { nome: "Elevação do Tibial Anterior na Parede", series: "3x15-20", obs: "Calcanhares afastados da parede, puxe ponta dos pés para cima. Estabiliza articulação do tornozelo." },
+        { nome: "Panturrilha Unilateral em Pé com Halter", series: "4x15", obs: "Pause 1s embaixo em alongamento completo, subida explosiva, contração firme no topo." }
+      ]
+    }]
+  },
+  C: { nome: "DIA C — Upper 2 (Estabilização Escapular)", foco: "Espessura Dorso · Fixadores da Escápula · Manguito Ativo", cor: "#4ADE80", bg: "#0a1e0f",
+    grupos: [
+      { nome: "🔥 PREPARAÇÃO CLÍNICA MANDATÓRIA (12 min)", itens: [
+        { nome: "Dead Hang Ativo Pendurar na Barra", series: "2x30s", obs: "Mantenha o corpo suspenso, deprima as escápulas retirando tensão dos trapézios superiores." },
+        { nome: "Rotação Externa na Polia", series: "2x15", obs: "Carga mínima. Aquece o infraespinal por bombeamento sanguíneo sem gerar fadiga." }
+      ]},
+      { nome: "🏋️ COSTAS (CORREÇÃO DE CIFOSE)", itens: [
+        { nome: "Remada Curvada Unilateral com Apoio no Banco", series: "4x10-12", obs: "Apoie o tronco no banco. Puxe o halter em direção ao quadril (vetor diagonal). Retração escapular máxima." },
+        { nome: "Pull-Over na Polia Alta com Barra Reta", series: "3x12", obs: "Mantenha cotovelos levemente fletidos e imóveis. Pare o movimento antes de passar a linha da cabeça." },
+        { nome: "Face Pull com Corda Rotação Externa", series: "3x15", obs: "Puxe a corda em direção à testa abrindo os braços. Polegares apontam para trás no final da contração." }
+      ]},
+      { nome: "🎯 PEITO E DELTOIDE POSTERIOR (MANUTENÇÃO)", itens: [
+        { nome: "Supino Reto no Chão com Halteres Pegada Neutra", series: "3x10-12", obs: "Garante a manutenção de estímulo peitoral sem risco de ultrapassar a linha articular posterior do ombro." },
+        { nome: "Crucifixo Invertido na Máquina ou Halteres", series: "4x12-15", obs: "Peito encostado no banco. Foco exclusivo em trapézio médio e romboides para combater ombros caídos." }
       ]},
       { nome: "💪 BRAÇOS", itens: [
-        { nome: "Tríceps francês unilateral com halter (overhead)", series: "3x12 cada", obs: "Cotovelo pra cima. Cabeça longa." },
-        { nome: "Rosca martelo com halteres", series: "3x12", obs: "Braquial e braquioradial." }
-      ]}
-    ]
+        { nome: "Rosca Direta Alternada com Halteres", series: "3x12", obs: "O movimento livre de halteres evita a rotação forçada do rádio/ulna, aliviando a epicondilite." },
+        { nome: "Tríceps Pulley com Corda", series: "3x15", obs: "Mantenha ombros estáticos em depressão. Abra a corda embaixo mantendo a contração por 1s." },
+        { nome: "Wrist Roller Protocolo de Punho", series: "2x15", obs: "Protocolo protetivo de punho." }
+      ]
+    }]
   },
-  B: { nome: "DIA B — Lower 1", foco: "Quadríceps · Posterior · Panturrilha", cor: "#38BDF8", bg: "#0a1e2e",
+  D: { nome: "DIA D — Lower 2 (Unilateral & Glúteo Médio)", foco: "Assimetrias · Glúteo Médio · Controle Patelar", cor: "#FB923C", bg: "#1e0d00",
     grupos: [
-      { nome: "🔥 AQUECIMENTO", itens: [
-        { nome: "Mobilidade de quadril", series: "2x10 cada", obs: "Círculos, afundo sem peso." },
-        { nome: "Pistol squat assistido (TRX ou banco)", series: "2x6 cada", obs: "Progressão do movimento." }
+      { nome: "🔥 PREPARAÇÃO CLÍNICA MANDATÓRIA (12 min)", itens: [
+        { nome: "Mobilidade Ativa de Quadril 90 90", series: "2 min", obs: "Sentada, joelhos fletidos a 90°, alterne a rotação interna e externa sem tirar o quadril do solo." },
+        { nome: "Ponte Glútea Unilateral e Clamshell Mini-Band", series: "2x12", obs: "Ativação profunda do glúteo médio para estabilização de pelve durante o búlgaro." }
       ]},
-      { nome: "🦵 QUADRÍCEPS", itens: [
-        { nome: "Pistol squat (com halter no peito)", series: "4x6-10 cada", obs: "Calcanhar no chão. Sobrecarga progressiva." },
-        { nome: "Leg press unilateral", series: "3x10-12 cada", obs: "Amplitude profunda. Joelho não trava." },
-        { nome: "Cadeira extensora", series: "3x15", obs: "Ênfase últimos 30° (VMO). Pausa 2s." }
+      { nome: "🦵 UNILATERAL & FOCO EM GLÚTEO", itens: [
+        { nome: "Agachamento Búlgaro", series: "3x10-12", obs: "Incline o tronco levemente à frente para transferir o vetor de força para o glúteo, poupando a patela." },
+        { nome: "Hip Thrust Unilateral com Halter", series: "3x10-12", obs: "Mantenha o alinhamento horizontal dos ossos do quadril. Não permita rotação da pelve." },
+        { nome: "Cadeira Abdutora Tronco Inclinado à Frente", series: "3x15", obs: "Incline o tronco a 45° à frente. Isola o feixe posterior do glúteo médio de forma eficiente." },
+        { nome: "Mesa Flexora Unilateral", series: "3x10-12", obs: "Controle absoluto da descida. Garante o equilíbrio de força entre as duas pernas." }
       ]},
-      { nome: "🏋️ POSTERIOR", itens: [
-        { nome: "Stiff com halteres (RDL)", series: "4x10-12", obs: "Quadril vai pra trás. Alonga isquiotibiais." }
-      ]},
-      { nome: "🦶 PANTURRILHA", itens: [
-        { nome: "Panturrilha em pé unilateral", series: "4x15 cada", obs: "Com halter. Alonga bem abaixo." },
-        { nome: "Panturrilha sentada (sóleo)", series: "3x15", obs: "Joelho a 90°." }
-      ]}
-    ]
-  },
-  C: { nome: "DIA C — Upper 2", foco: "Costas · Peito · Ombro · Braços", cor: "#4ADE80", bg: "#0a1e0f",
-    grupos: [
-      { nome: "🔥 AQUECIMENTO", itens: [
-        { nome: "Face pull na polia (leve)", series: "2x15", obs: "Ativa posteriores e manguito." }
-      ]},
-      { nome: "🏋️ COSTAS (FOCO DETALHADO)", itens: [
-        { nome: "Remada curvada unilateral com halter", series: "4x10-12 cada", obs: "Apoio no banco. Puxa em direção ao quadril. Gira tronco." },
-        { nome: "Pull-over na polia", series: "3x12", obs: "Braços quase estendidos. Lateral do dorsal." },
-        { nome: "Face pull na polia (carga progressiva)", series: "3x15", obs: "Posteriores e manguito. Progressão obrigatória." }
-      ]},
-      { nome: "🎯 PEITO E OMBRO (MANUTENÇÃO)", itens: [
-        { nome: "Supino reto com halteres", series: "3x10-12", obs: "Mantém estímulo semanal. Desce 3s." },
-        { nome: "Elevação lateral inclinada no banco", series: "3x15", obs: "Banco 30°. Enfatiza deltóide médio posterior." }
-      ]},
-      { nome: "💪 BRAÇOS", itens: [
-        { nome: "Rosca direta na polia", series: "3x12", obs: "Cotovelo fixo. Tensão constante." },
-        { nome: "Tríceps pulley com corda (polia alta)", series: "3x15", obs: "Isola lateral e medial." }
-      ]}
-    ]
-  },
-  D: { nome: "DIA D — Lower 2", foco: "Glúteo · Quad · Posterior · Panturrilha", cor: "#FB923C", bg: "#1e0d00",
-    grupos: [
-      { nome: "🔥 AQUECIMENTO", itens: [
-        { nome: "Glute bridge", series: "2x20", obs: "Ativa glúteo." },
-        { nome: "Mesa flexora 40%", series: "2x15", obs: "Aquece isquiotibiais." }
-      ]},
-      { nome: "🍑 GLÚTEO", itens: [
-        { nome: "Hip thrust com barra", series: "4x12", obs: "Pausa 2s no topo. Queixo no peito." },
-        { nome: "Cadeira abdutora", series: "3x15", obs: "Glúteo médio. Tronco firme." }
-      ]},
-      { nome: "🦵 QUADRÍCEPS + GLÚTEO", itens: [
-        { nome: "Afundo búlgaro (pé de trás no banco)", series: "3x10-12 cada", obs: "Desce controlado. Joelho alinhado. Estimula quad e glúteo." }
-      ]},
-      { nome: "🏋️ POSTERIOR", itens: [
-        { nome: "Mesa flexora", series: "4x10-12", obs: "Desce 3s. Pausa no topo." }
-      ]},
-      { nome: "🦶 PANTURRILHA", itens: [
-        { nome: "Panturrilha no leg press", series: "3x20", obs: "Pés afastados. Joelhos estendidos." }
-      ]}
-    ]
+      { nome: "🦶 PANTURRILHA & TORNOZELO", itens: [
+        { nome: "Panturrilha Sentada na Máquina", series: "4x15-20", obs: "Cadência lenta. O fortalecimento do sóleo estabiliza o tornozelo na fase de passada." },
+        { nome: "Elevação do Tibial Anterior", series: "2x20", obs: "Idem Dia B." }
+      ]
+    }]
   }
 };
 
 var CARDIO = {
-  A: { tipo: "LISS", tempo: "20 min", desc: "Esteira inclinada 6-8% ou elíptico" },
-  B: { tipo: "Opcional", tempo: "15 min", desc: "Caminhada leve se estiver bem" },
-  C: { tipo: "LISS", tempo: "20 min", desc: "Bicicleta ou esteira, intensidade baixa" },
-  D: { tipo: "Opcional", tempo: "15 min", desc: "Caminhada ou descanso total" }
+  A: { tipo: "LISS (Baixo Impacto)", tempo: "20 min", desc: "Esteira inclinada 6-8%. Não segure no painel para não estressar o ombro." },
+  B: { tipo: "Opcional", tempo: "15 min", desc: "Caminhada leve ou elíptico sem movimentação ativa dos braços." },
+  C: { tipo: "LISS (Cardio Regenerativo)", tempo: "20 min", desc: "Bicicleta ergométrica mantendo postura ereta (sem apoiar o peso nos guidões)." },
+  D: { tipo: "Opcional", tempo: "15 min", desc: "Caminhada regenerativa focando na extensão ativa do quadril ao caminhar." }
 };
 
 var ROTACAO = [
-  { dia: "Segunda", treino: "Dia A — Upper 1", cor: "#C084FC" },
-  { dia: "Terça", treino: "Dia B — Lower 1", cor: "#38BDF8" },
-  { dia: "Quarta", treino: "Descanso ativo", cor: "#ffffff30" },
-  { dia: "Quinta", treino: "Dia C — Upper 2", cor: "#4ADE80" },
-  { dia: "Sexta", treino: "Dia D — Lower 2", cor: "#FB923C" },
-  { dia: "Sáb/Dom", treino: "Descanso", cor: "#ffffff20" }
+  { dia: "Segunda", treino: "Dia A — Upper 1 (Protetor Acromial)", cor: "#C084FC" },
+  { dia: "Terça", treino: "Dia B — Lower 1 (Cadeia Posterior)", cor: "#38BDF8" },
+  { dia: "Quarta", treino: "Descanso Ativo / Liberação Postural", cor: "#ffffff30" },
+  { dia: "Quinta", treino: "Dia C — Upper 2 (Estabilização Escapular)", cor: "#4ADE80" },
+  { dia: "Sexta", treino: "Dia D — Lower 2 (Unilateral / Glúteo)", cor: "#FB923C" },
+  { dia: "Sáb/Dom", treino: "Descanso Estrutural Total", cor: "#ffffff20" }
 ];
 
 var MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-
 var currentDay = 'A';
 var currentMes = new Date().getMonth();
 var currentAno = new Date().getFullYear();
@@ -327,75 +326,43 @@ function salvar() {
   } catch(e) {}
 }
 
-// --- Backup / Exportação ---
 function exportarDados() {
-  var dados = {
-    registro: registro,
-    cargas: cargas,
-    exportado_em: new Date().toISOString()
-  };
+  var dados = { registro: registro, cargas: cargas, exportado_em: new Date().toISOString() };
   var blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
   var url = URL.createObjectURL(blob);
   var a = document.createElement('a');
-  a.href = url;
-  a.download = 'meu_treino_backup.json';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  a.href = url; a.download = 'meu_treino_clinico_backup.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
 }
 
-function importarDados(event) {
+function importDados(event) {
   var file = event.target.files[0];
   if (!file) return;
   var reader = new FileReader();
   reader.onload = function(e) {
     try {
       var dados = JSON.parse(e.target.result);
-      if (!dados.registro || !dados.cargas) {
-        alert('Arquivo inválido. Precisa conter registro e cargas.');
-        return;
-      }
-      if (confirm('Importar dados? Isso sobrescreverá seus dados atuais.')) {
-        registro = dados.registro;
-        cargas = dados.cargas;
-        salvar();
-        alert('Dados importados com sucesso! A página será recarregada.');
-        location.reload();
-      }
-    } catch (err) {
-      alert('Erro ao ler o arquivo. Verifique se é um JSON válido.');
-    }
+      if (!dados.registro || !dados.cargas) { alert('Arquivo inválido.'); return; }
+      if (confirm('Importar dados? Isso substituirá o histórico atual.')) { registro = dados.registro; cargas = dados.cargas; salvar(); location.reload(); }
+    } catch (err) { alert('Erro ao ler arquivo.'); }
   };
-  reader.readAsText(file);
-  // Limpa o input para permitir importar o mesmo arquivo novamente
-  event.target.value = '';
+  reader.readAsText(file); event.target.value = '';
 }
 
 function confirmarLimpar() {
-  if (confirm('Tem certeza que deseja limpar todos os dados? (registros de frequência e cargas)')) {
-    registro = {};
-    cargas = {};
-    salvar();
-    alert('Dados apagados. A página será recarregada.');
-    location.reload();
-  }
+  if (confirm('Tem certeza que deseja limpar seus registros de cargas e frequências?')) { registro = {}; cargas = {}; salvar(); location.reload(); }
 }
 
-// --- Navegação e Renderização ---
 function selectDay(d) {
-  currentDay = d;
-  gruposState = {};
+  currentDay = d; gruposState = {};
   var btns = document.querySelectorAll('.day-btn');
-  btns[0].className = 'day-btn'; btns[1].className = 'day-btn';
-  btns[2].className = 'day-btn'; btns[3].className = 'day-btn';
+  btns[0].className = 'day-btn'; btns[1].className = 'day-btn'; btns[2].className = 'day-btn'; btns[3].className = 'day-btn';
   btns[['A','B','C','D'].indexOf(d)].className = 'day-btn active-' + d.toLowerCase();
   renderTreino();
 }
 
 function renderTreino() {
-  var t = TREINOS[currentDay];
-  var c = CARDIO[currentDay];
+  var t = TREINOS[currentDay]; var c = CARDIO[currentDay];
   var html = '<div class="treino-header" style="background:' + t.bg + ';border:1px solid ' + t.cor + '25">'
     + '<div class="treino-eyebrow" style="color:' + t.cor + '">' + t.foco + '</div>'
     + '<div class="treino-title">' + t.nome + '</div></div>';
@@ -410,45 +377,44 @@ function renderTreino() {
     g.itens.forEach(function(ex) {
       var cargaKey = currentDay + '-' + globalIdx;
       var cargaSalva = cargas[cargaKey] || '';
+      
+      // Criação dinâmica da URL de busca de execução no plano cinesiológico
+      var termBusca = encodeURIComponent('execução correta ' + ex.nome);
+      var linkVideo = 'https://www.youtube.com/results?search_query=' + termBusca;
+
       html += '<div class="ex-card"><div class="ex-top"><div class="ex-nome">' + ex.nome + '</div>'
         + '<div class="ex-series" style="background:' + t.cor + '22;color:' + t.cor + '">' + ex.series + '</div></div>'
         + (ex.obs ? '<div class="ex-obs">💡 ' + ex.obs + '</div>' : '')
-        + '<div class="ex-carga-container">'
-        + '<span class="ex-carga-label">⚖️ </span>'
-        + '<input type="text" class="ex-carga-input" placeholder="Carga (kg)" value="' + cargaSalva + '" data-key="' + cargaKey + '" onchange="salvarCarga(this)" />'
-        + '</div>'
-        + '</div>';
+        + '<div style="margin-top: 8px; display: flex; gap: 8px; align-items: center; justify-content: space-between;">'
+        + '<div class="ex-carga-container"><span class="ex-carga-label">⚖️ </span>'
+        + '<input type="text" class="ex-carga-input" placeholder="Carga anotada" value="' + cargaSalva + '" data-key="' + cargaKey + '" onchange="salvarCarga(this)" /></div>'
+        + '<a href="' + linkVideo + '" target="_blank" style="text-decoration: none; background: ' + t.cor + '15; color: ' + t.cor + '; font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 6px; border: 1px solid ' + t.cor + '33; display: flex; align-items: center; gap: 4px; white-space: nowrap; height: 30px;">🔍 Execução</a>'
+        + '</div></div>';
       globalIdx++;
     });
     html += '</div></div>';
   });
 
-  html += '<div class="ab-card"><div class="ab-title">🧘 ABDÔMEN (2-3x/semana pós-treino)</div>'
-    + '<div class="ab-text">Prancha com sobrecarga 3x30-45s, Crunch na polia 3x12-15, Vacuum 3x30s. Progressão de carga é bem-vinda.</div></div>';
+  html += '<div class="ab-card"><div class="ab-title">🧘 CORE ANTI-EXTENSÃO & ESTABILIDADE LOMBAR</div>'
+    + '<div class="ab-text">Execute 3x45s de Prancha Abdominal Clássica (focando em contrair glúteos e empurrar o solo) + 3x12 Dead Bug controlado. Evite abdominais que gerem hiperflexão do quadril, pois eles recrutam excessivamente o psoas.</div></div>';
 
   html += '<div class="cardio-card" style="background:#111;border:1px solid ' + t.cor + '35">'
-    + '<div class="cardio-top"><div class="cardio-title">🏃 CARDIO</div><div class="cardio-badges">'
+    + '<div class="cardio-top"><div class="cardio-title">🏃 ESPECIFICAÇÃO CARDIOVASCULAR</div><div class="cardio-badges">'
     + '<span class="badge" style="background:' + t.cor + '22;color:' + t.cor + '">' + c.tipo + '</span>'
     + '<span class="badge badge-muted">' + c.tempo + '</span></div></div>'
     + '<div class="cardio-text">' + c.desc + '</div></div>';
 
-  html += '<div class="rotacao-card"><div class="rotacao-title">Rotação semanal</div>';
+  html += '<div class="rotacao-card"><div class="rotacao-title">Planejamento da Distribuição Semanal</div>';
   ROTACAO.forEach(function(r, i) {
     html += '<div class="rotacao-row"' + (i === ROTACAO.length-1 ? ' style="border-bottom:none"' : '') + '>'
-      + '<span class="rotacao-dia">' + r.dia + '</span>'
-      + '<span class="rotacao-treino" style="color:' + r.cor + '">' + r.treino + '</span></div>';
+      + '<span class="rotacao-dia">' + r.dia + '</span><span class="rotacao-treino" style="color:' + r.cor + '">' + r.treino + '</span></div>';
   });
-  html += '</div><div class="tip-card">⚡ Descanso: 45-60s isoladores, 60-90s compostos. Foco na fase excêntrica (2-3s).</div>';
+  html += '</div><div class="tip-card">⚠️ <b>Cláusula Protetora Interrompível:</b> O treino pode ir até a falha periférica muscular (queimação metabólica), mas deve ser abortado imediatamente se surgir qualquer sinal de pinçamento articular agudo no ombro ou fisgada limitante no glúteo.</div>';
 
   document.getElementById('treino-content').innerHTML = html;
 }
 
-function salvarCarga(input) {
-  var key = input.getAttribute('data-key');
-  cargas[key] = input.value;
-  salvar();
-}
-
+function salvarCarga(input) { var key = input.getAttribute('data-key'); cargas[key] = input.value; salvar(); }
 function toggleGrupo(key) {
   gruposState[key] = gruposState[key] === false ? true : false;
   var el = document.getElementById('gc-' + key);
@@ -456,20 +422,12 @@ function toggleGrupo(key) {
   if (gruposState[key] === false) { el.classList.add('hidden'); btn.textContent = '▼'; }
   else { el.classList.remove('hidden'); btn.textContent = '▲'; }
 }
-
-function renderFreq() {
-  renderStats(); renderStreak(); renderCalendario();
-}
-
+function renderFreq() { renderStats(); renderStreak(); renderCalendario(); }
 function renderStats() {
-  var hoje = new Date();
-  var totalMes = 0, totalAno = 0, totalGeral = 0;
+  var hoje = new Date(); var totalMes = 0, totalAno = 0, totalGeral = 0;
   Object.keys(registro).forEach(function(k) {
-    var v = registro[k];
-    if (!v || v === 'R') return;
-    totalGeral++;
-    var parts = k.split('-');
-    var y = parseInt(parts[0]), m = parseInt(parts[1]);
+    var v = registro[k]; if (!v || v === 'R') return; totalGeral++;
+    var parts = k.split('-'); var y = parseInt(parts[0]), m = parseInt(parts[1]);
     if (y === hoje.getFullYear()) totalAno++;
     if (y === hoje.getFullYear() && m === hoje.getMonth()) totalMes++;
   });
@@ -478,93 +436,62 @@ function renderStats() {
     '<div class="stat-card"><div class="stat-num" style="color:#38BDF8">' + totalAno + '</div><div class="stat-label">Este ano</div></div>' +
     '<div class="stat-card"><div class="stat-num" style="color:#C084FC">' + totalGeral + '</div><div class="stat-label">Total</div></div>';
 }
-
 function renderStreak() {
-  var hoje = new Date();
-  var streak = 0;
-  var d = new Date(hoje);
+  var hoje = new Date(); var streak = 0; var d = new Date(hoje);
   for (var i = 0; i < 365; i++) {
     var k = dateKey(d);
-    if (registro[k] && registro[k] !== 'R') { streak++; d.setDate(d.getDate()-1); }
-    else break;
+    if (registro[k] && registro[k] !== 'R') { streak++; d.setDate(d.getDate()-1); } else break;
   }
   document.getElementById('streak-card').innerHTML =
     '<div class="streak-fire">🔥</div><div><div class="streak-num">' + streak + ' dia' + (streak !== 1 ? 's' : '') + '</div>'
-    + '<div class="streak-label">sequência atual de treinos</div></div>';
+    + '<div class="streak-label">frequência ininterrupta</div></div>';
 }
-
 function renderCalendario() {
   document.getElementById('mes-nome').textContent = MESES[currentMes] + ' ' + currentAno;
-  var hoje = new Date();
-  var primeiroDia = new Date(currentAno, currentMes, 1).getDay();
+  var hoje = new Date(); var primeiroDia = new Date(currentAno, currentMes, 1).getDay();
   var diasNoMes = new Date(currentAno, currentMes+1, 0).getDate();
   var html = '';
   for (var i = 0; i < primeiroDia; i++) html += '<div class="cal-cell empty"></div>';
   for (var d = 1; d <= diasNoMes; d++) {
-    var dt = new Date(currentAno, currentMes, d);
-    var k = dateKey(dt);
-    var isHoje = dt.toDateString() === hoje.toDateString();
-    var isFuturo = dt > hoje;
-    var val = registro[k];
-    var cls = 'cal-cell ';
-    var lbl = '';
-    if (isFuturo) cls += 'futuro';
-    else if (!val) cls += 'no-treino';
-    else if (val === 'R') { cls += 'descanso'; lbl = '😴'; }
-    else { cls += 'treino-' + val.toLowerCase(); lbl = val; }
+    var dt = new Date(currentAno, currentMes, d); var k = dateKey(dt);
+    var isHoje = dt.toDateString() === hoje.toDateString(); var isFuturo = dt > hoje;
+    var val = registro[k]; var cls = 'cal-cell '; var lbl = '';
+    if (isFuturo) cls += 'futuro'; else if (!val) cls += 'no-treino';
+    else if (val === 'R') { cls += 'descanso'; lbl = '😴'; } else { cls += 'treino-' + val.toLowerCase(); lbl = val; }
     if (isHoje) cls += ' hoje';
     var onclick = isFuturo ? '' : 'onclick="abrirModal(\'' + k + '\',' + d + ')"';
-    html += '<div class="' + cls + '" ' + onclick + '><span>' + d + '</span>'
-      + (lbl ? '<span class="cal-label">' + lbl + '</span>' : '') + '</div>';
+    html += '<div class="' + cls + '" ' + onclick + '><span>' + d + '</span>' + (lbl ? '<span class="cal-label">' + lbl + '</span>' : '') + '</div>';
   }
   document.getElementById('cal-cells').innerHTML = html;
 }
-
 function mudarMes(dir) {
   currentMes += dir;
   if (currentMes > 11) { currentMes = 0; currentAno++; }
   if (currentMes < 0) { currentMes = 11; currentAno--; }
   renderCalendario();
 }
-
-function dateKey(d) {
-  return d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
-}
-
+function dateKey(d) { return d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate(); }
 function abrirModal(key, dia) {
-  modalDate = key;
-  var val = registro[key];
+  modalDate = key; var val = registro[key];
   document.getElementById('modal-title').textContent = 'Dia ' + dia + ' de ' + MESES[currentMes];
   document.getElementById('modal-date').textContent = val ? ('Registrado: ' + (val === 'R' ? 'Descanso' : 'Dia ' + val)) : 'Sem registro';
   document.querySelectorAll('.modal-opt').forEach(function(el) { el.classList.remove('selected'); });
   if (val) { var map = {A:0,B:1,C:2,D:3,R:4}; if (map[val] !== undefined) document.querySelectorAll('.modal-opt')[map[val]].classList.add('selected'); }
   document.getElementById('modal').classList.remove('hidden');
 }
-
-function fecharModal() {
-  document.getElementById('modal').classList.add('hidden');
-  modalDate = null;
-}
-
+function fecharModal() { document.getElementById('modal').classList.add('hidden'); modalDate = null; }
 function registrar(val) {
   if (!modalDate) return;
-  if (val === null) delete registro[modalDate];
-  else registro[modalDate] = val;
+  if (val === null) delete registro[modalDate]; else registro[modalDate] = val;
   salvar(); fecharModal(); renderFreq();
 }
-
-document.getElementById('modal').addEventListener('click', function(e) {
-  if (e.target === this) fecharModal();
-});
-
+document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) fecharModal(); });
 function showPage(p) {
   document.querySelectorAll('.page').forEach(function(el) { el.classList.remove('active'); });
   document.querySelectorAll('.nav-btn').forEach(function(el) { el.classList.remove('active'); });
-  document.getElementById('page-' + p).classList.add('active');
-  document.getElementById('nav-' + p).classList.add('active');
+  document.getElementById('page-' + p).classList.add('active'); document.getElementById('nav-' + p).classList.add('active');
   if (p === 'freq') renderFreq();
 }
-
 selectDay('A');
 </script>
 </body>
