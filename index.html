@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Meu Treino">
 <meta name="theme-color" content="#0d0d0d">
-<title>Meu Treino · Avançado Clínico V2</title>
+<title>Meu Treino · Avançado Clínico Definitivo</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter', system-ui, sans-serif; min-height: 100vh; padding-bottom: 80px; }
@@ -119,8 +119,8 @@ body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter',
 <div class="page active" id="page-treino">
   <div class="header">
     <div class="header-eyebrow">Auditoria Cinesiológica</div>
-    <div class="header-title">Upper/Lower 2x · Estrutural</div>
-    <div class="header-sub">Foco: Hipertrofia Avançada & Reabilitação Funcional</div>
+    <div class="header-title">Upper/Lower 2x · Definitivo PT-BR</div>
+    <div class="header-sub">Nomenclatura em Português & Foco Estético</div>
   </div>
   <div class="day-selector">
     <button class="day-btn" onclick="selectDay('A')">Dia A</button>
@@ -201,107 +201,114 @@ body { background: #0d0d0d; color: #f0f0f0; font-family: -apple-system, 'Inter',
 
 <script>
 var TREINOS = {
-  A: { nome: "DIA A — Upper 1 (Protetor Acromial)", foco: "Largura Costas · Peito Seguro · Cadência Controlada", cor: "#C084FC", bg: "#1e0a2e",
+  A: { nome: "DIA A — Superiores 1", foco: "Peitoral · Deltóide Anterior · Tríceps", cor: "#C084FC", bg: "#1e0a2e",
     grupos: [
       { nome: "🔥 PREPARAÇÃO CLÍNICA MANDATÓRIA (12 min)", itens: [
-        { nome: "Liberação de Peitoral Menor e Deltoide Anterior", series: "1 min/lado", obs: "Pressione bolinha de lacrosse contra a parede na porção anterior do ombro." },
-        { nome: "Rolagem de Coluna Torácica no Rolo de Espuma", series: "2 min", obs: "Mantenha braços cruzados no peito, realize extensão torácica segmentar sem estender a lombar." },
-        { nome: "Chin Tucks Cervicais (Decúbito Dorsal)", series: "2x10", obs: "Deitada, empurre a nuca contra o solo simulando um duplo queixo. Segure 5s no ápice." },
-        { nome: "Wall Slides com Rolo de Espuma", series: "2x8", obs: "Deslize antebraços na parede ativando o serrátil. Mantenha as costelas baixas." }
+        { nome: "Liberação de Peitoral Menor e Deltóide Anterior", series: "1 min/lado", obs: "Pressione a quina do halter contra a parede na porção anterior do ombro." },
+        { nome: "Rolagem de Coluna Torácica no Rolo de Espuma", series: "2 min", obs: "Mantenha braços cruzados no peito, realize extensão torácica segmentar." },
+        { nome: "Retração Cervical no Chão (Chin Tucks)", series: "2x10", obs: "Deitada, movimento de duplo queixo (força sutil de 30%)." },
+        { nome: "Deslizamento de Antebraço na Parede (Wall Slides)", series: "2x8", obs: "Com rolo de espuma. Empurre a parede ativamente." }
       ]},
-      { nome: "🎯 PEITO (LIMITAÇÃO MECÂNICA)", itens: [
-        { nome: "DB Floor Press (Supino com Halteres no Chão)", series: "4x8-12", obs: "Pegada semi-pronada. Cadência 4-1-1-0. Pare assim que o tríceps tocar o solo. Zera estresse no supraespinal." }
+      { nome: "🎯 PEITORAL (FOCO GERAL E SUPERIOR)", itens: [
+        { nome: "Supino Sentado na Máquina (Chest Press)", series: "4x8-12", obs: "IMPORTANTE: Ajuste o banco para que os cotovelos parem na linha do tronco na descida." },
+        { nome: "Crossover na Polia Baixa de Baixo para Cima (Low Pulley Crossover)", series: "3x12-15", obs: "Traga os cabos de baixo para cima até a linha do peito superior." }
       ]},
-      { nome: "🏋️ COSTAS (DESCOMPRESSÃO E LARGURA)", itens: [
-        { nome: "Puxada Alta com Triângulo (Pegada Neutra)", series: "4x10-12", obs: "Puxe direcionando o cotovelo ao quadril. Cadência excêntrica de 3s. Evita impacto acromial." },
-        { nome: "Remada Baixa Sentada com Triângulo", series: "3x12", obs: "Retração escapular máxima no final. Pause 1s no ápice da contração sem oscilar o tronco." }
+      { nome: "🏋️ DORSAL E MIOLO DAS COSTAS", itens: [
+        { nome: "Puxada Alta com Triângulo Pegada Neutra (Neutral Grip Lat Pulldown)", series: "4x10-12", obs: "Puxe direcionando o cotovelo ao quadril. Evita a rotação interna severa do ombro." },
+        { nome: "Remada Baixa Sentada com Triângulo (Seated Cable Row)", series: "3x12", obs: "Retração escapular máxima no final. Pause 1s no ápice da contração." }
       ]},
-      { nome: "🎯 OMBROS (PLANO ESCAPULAR · RIR 1-2)", itens: [
-        { nome: "Landmine Press Unilateral", series: "3x10-12", obs: "Ajoelhada. Empurre a barra em diagonal para frente. Trajetória anatômica livre de impacto." },
-        { nome: "Scaption (Elevação Lateral no Plano Escapular)", series: "3x12-15", obs: "Halteres leves. Eleve os braços a 30° para frente, polegares apontados para cima. Máximo 90°." }
+      { nome: "🎯 OMBROS (ANTERIOR E POSTERIOR)", itens: [
+        { nome: "Desenvolvimento Unilateral com Barra no Chão (Landmine Press)", series: "3x10-12 cada", obs: "Ajoelhada ou em pé, empurre a barra em diagonal para frente." },
+        { nome: "Crucifixo Invertido na Máquina (Reverse Pec Deck)", series: "3x12-15", obs: "Foco 100% no deltóide posterior. Auxilia na correção da postura." }
       ]},
-      { nome: "💪 BRAÇOS & CONTROLE DE EPICONDILITE", itens: [
-        { nome: "Tríceps Testa no Solo com Halteres", series: "3x10-12", obs: "Deitada no chão. Cotovelos apontados fixos para o teto. Elimina estresse excessivo no ombro." },
-        { nome: "Rosca Martelo com Halteres", series: "3x12", obs: "Pegada neutra constante. Fortalece o braquioradial e protege o tendão conjunto do cotovelo." },
-        { nome: "Wrist Roller Flexo-Extensão de Punho", series: "2x15", obs: "Antebraço totalmente apoiado. Essencial para modulação de dor na epicondilite." }
+      { nome: "💪 TRÍCEPS, BÍCEPS E ANTEBRAÇO", itens: [
+        { nome: "Tríceps na Polia com Corda (Triceps Rope Pushdown)", series: "3x12", obs: "Cotovelos colados ao corpo. Ativa a cabeça lateral externa do tríceps." },
+        { nome: "Tríceps Testa no Chão com Halteres (Skull Crusher)", series: "3x12", obs: "Foco na cabeça longa. Fazer no chão protege o ombro." },
+        { nome: "Rosca Martelo com Halteres (Hammer Curl)", series: "3x12", obs: "Pegada neutra constante. Fortalece o braquioradial." },
+        { nome: "Flexão de Punho com Halter (Wrist Curl)", series: "2x15", obs: "Palmas viradas para cima. Antebraço apoiado." },
+        { nome: "Extensão de Punho com Halter (Reverse Wrist Curl)", series: "2x15", obs: "Palmas viradas para baixo. Essencial para controle da epicondilite." }
       ]
     }]
   },
-  B: { nome: "DIA B — Lower 1 (Domínio da Cadeia Posterior)", foco: "Glúteos Máximos · Isquiotibiais · Estabilização Axial", cor: "#38BDF8", bg: "#0a1e2e",
+  B: { nome: "DIA B — Inferiores 1", foco: "Quadríceps · Glúteos · Estabilização", cor: "#38BDF8", bg: "#0a1e2e",
     grupos: [
       { nome: "🔥 PREPARAÇÃO CLÍNICA MANDATÓRIA (12 min)", itens: [
-        { nome: "Descompressão de Ponto Gatilho no Piriforme", series: "2 min/lado", obs: "Bolinha de tênis/lacrosse profunda no centro do glúteo. Sustente no ponto de maior dor por 45s." },
-        { nome: "Couch Stretch Alongamento do Psoas", series: "2x30s/lado", obs: "Joelho no chão colado à parede, contraia o glúteo para estirar flexores. Corrige a anteversão pélvica." },
-        { nome: "Liberação Miofascial de Quadríceps no Rolo", series: "2 min", obs: "Deslize o rolo logo acima da patela. Flexione o joelho ativamente nos pontos mais rígidos." },
-        { nome: "Mobilidade de Dorsiflexão de Tornozelo na Parede", series: "2x10/lado", obs: "Avançar joelho à frente sem tirar o calcanhar do chão. Melhora estabilidade profunda." }
+        { nome: "Liberação do Piriforme e Glúteo", series: "2 min/lado", obs: "Alça de um kettlebell sob o glúteo cruzado." },
+        { nome: "Alongamento de Flexores de Quadril no Sofá/Parede (Couch Stretch)", series: "2x30s/lado", obs: "Joelho no chão colado à parede. Corrige a anteversão pélvica." },
+        { nome: "Liberação Miofascial de Quadríceps no Rolo", series: "2 min", obs: "ESSENCIAL ANTES DA EXTENSORA: Deslize o rolo logo acima da patela." },
+        { nome: "Mobilidade de Tornozelo na Parede", series: "2x10/lado", obs: "Avançar joelho à frente sem tirar o calcanhar do chão." }
       ]},
-      { nome: "🍑 GLÚTEOS & ISQUIOTIBIAIS (ALINHAMENTO PÉLVICO)", itens: [
-        { nome: "Hip Thrust Elevação Pélvica com Barra", series: "4x10-12", obs: "Queixo no peito, costelas baixas. Segure 2s em contração máxima no topo. Traciona a pelve para o neutro." },
-        { nome: "Stiff Unilateral com Halter (Single-Leg RDL)", series: "3x10-12", obs: "Foco no equilíbrio unipodal. Quadril projeta para trás, joelho de apoio fixo em leve flexão." },
-        { nome: "Leg Press 45 Pés Altos e Afastados", series: "3x10-12", obs: "Posicione calcanhares na borda superior para recrutar posterior. Não trave joelhos na extensão." },
-        { nome: "Cadeira ou Mesa Flexora", series: "3x12-15", obs: "Fase excêntrica de 4 segundos. Fortalecimento excêntrico inibe hipertonia do quadríceps anterior." }
+      { nome: "🦵 QUADRÍCEPS (FOCO ANTERIOR)", itens: [
+        { nome: "Agachamento Unilateral (Pistol Squat)", series: "4x6-10 cada", obs: "Mantenha o calcanhar no chão. Use assistência se necessário." },
+        { nome: "Leg Press 45° Unilateral (Single-Leg Leg Press)", series: "3x10-12 cada", obs: "Amplitude máxima com controle." },
+        { nome: "Cadeira Extensora (Leg Extension)", series: "3x15", obs: "Foco no pico de contração de 2s no topo." }
       ]},
-      { nome: "💡 ESTABILIZAÇÃO PERIFÉRICA & PANTURRILHA", itens: [
-        { nome: "Elevação do Tibial Anterior na Parede", series: "3x15-20", obs: "Calcanhares afastados da parede, puxe ponta dos pés para cima. Estabiliza articulação do tornozelo." },
-        { nome: "Panturrilha Unilateral em Pé com Halter", series: "4x15", obs: "Pause 1s embaixo em alongamento completo, subida explosiva, contração firme no topo." }
+      { nome: "🍑 GLÚTEOS E POSTERIOR DE COXA", itens: [
+        { nome: "Stiff / Levantamento Terra Romeno (RDL)", series: "4x10-12", obs: "Costas travadas. Desça alongando os posteriores." },
+        { nome: "Elevação Pélvica com Barra (Hip Thrust)", series: "4x10-12", obs: "Queixo no peito. Segure 2s em contração máxima no topo." }
+      ]},
+      { nome: "💡 PANTURRILHA E ESTABILIZAÇÃO", itens: [
+        { nome: "Elevação de Ponta de Pé na Parede (Tibialis Raise)", series: "3x15-20", obs: "Puxe ponta dos pés para cima." },
+        { nome: "Flexão Plantar Unilateral em Pé (Single-Leg Calf Raise)", series: "4x15", obs: "Pause 1s embaixo, subida explosiva." }
       ]
     }]
   },
-  C: { nome: "DIA C — Upper 2 (Estabilização Escapular)", foco: "Espessura Dorso · Fixadores da Escápula · Manguito Ativo", cor: "#4ADE80", bg: "#0a1e0f",
+  C: { nome: "DIA C — Superiores 2", foco: "Dorsal · Estabilização Escapular · Bíceps", cor: "#4ADE80", bg: "#0a1e0f",
     grupos: [
       { nome: "🔥 PREPARAÇÃO CLÍNICA MANDATÓRIA (12 min)", itens: [
-        { nome: "Dead Hang Ativo Pendurar na Barra", series: "2x30s", obs: "Mantenha o corpo suspenso, deprima as escápulas retirando tensão dos trapézios superiores." },
-        { nome: "Rotação Externa na Polia", series: "2x15", obs: "Carga mínima. Aquece o infraespinal por bombeamento sanguíneo sem gerar fadiga." }
+        { nome: "Suspensão Ativa na Barra (Active Dead Hang)", series: "2x30s", obs: "Deprima as escápulas retirando tensão dos trapézios." },
+        { nome: "Rotação Externa de Ombro na Polia (Cable External Rotation)", series: "2x15", obs: "Carga leve. Aquece o infraespinal." }
       ]},
-      { nome: "🏋️ COSTAS (CORREÇÃO DE CIFOSE)", itens: [
-        { nome: "Remada Curvada Unilateral com Apoio no Banco", series: "4x10-12", obs: "Apoie o tronco no banco. Puxe o halter em direção ao quadril (vetor diagonal). Retração escapular máxima." },
-        { nome: "Pull-Over na Polia Alta com Barra Reta", series: "3x12", obs: "Mantenha cotovelos levemente fletidos e imóveis. Pare o movimento antes de passar a linha da cabeça." },
-        { nome: "Face Pull com Corda Rotação Externa", series: "3x15", obs: "Puxe a corda em direção à testa abrindo os braços. Polegares apontam para trás no final da contração." }
+      { nome: "🏋️ DORSAL E CORREÇÃO DE CIFOSE", itens: [
+        { nome: "Remada Curvada Unilateral Apoiada (Dumbbell Row)", series: "4x10-12", obs: "Apoie o tronco no banco e puxe na direção do quadril." },
+        { nome: "Pull-Over na Polia Alta com Barra (Straight Arm Pulldown)", series: "3x12", obs: "Pare o movimento antes de passar a linha da cabeça." },
+        { nome: "Puxada no Rosto com Corda (Face Pull)", series: "3x15", obs: "Puxe a corda em direção à testa. Polegares para trás no final." }
       ]},
-      { nome: "🎯 PEITO E DELTOIDE POSTERIOR (MANUTENÇÃO)", itens: [
-        { nome: "Supino Reto no Chão com Halteres Pegada Neutra", series: "3x10-12", obs: "Garante a manutenção de estímulo peitoral sem risco de ultrapassar a linha articular posterior do ombro." },
-        { nome: "Crucifixo Invertido na Máquina ou Halteres", series: "4x12-15", obs: "Peito encostado no banco. Foco exclusivo em trapézio médio e romboides para combater ombros caídos." }
+      { nome: "🎯 PEITORAL E DELTÓIDE LATERAL", itens: [
+        { nome: "Supino Sentado na Máquina (Chest Press)", series: "3x10-12", obs: "Manutenção de força peitoral." },
+        { nome: "Elevação Lateral no Plano Escapular (Scaption)", series: "3x15", obs: "Sua elevação lateral sem dor! Braços a 30° à frente, polegares para cima." }
       ]},
-      { nome: "💪 BRAÇOS", itens: [
-        { nome: "Rosca Direta Alternada com Halteres", series: "3x12", obs: "O movimento livre de halteres evita a rotação forçada do rádio/ulna, aliviando a epicondilite." },
-        { nome: "Tríceps Pulley com Corda", series: "3x15", obs: "Mantenha ombros estáticos em depressão. Abra a corda embaixo mantendo a contração por 1s." },
-        { nome: "Wrist Roller Protocolo de Punho", series: "2x15", obs: "Protocolo protetivo de punho." }
+      { nome: "💪 BÍCEPS, TRÍCEPS E ANTEBRAÇO", itens: [
+        { nome: "Rosca Direta na Polia com Puxador Móvel (Cable Curl)", series: "3x12", obs: "O acessório móvel permite a rotação natural do punho." },
+        { nome: "Tríceps na Polia com Corda (Triceps Rope Pushdown)", series: "3x15", obs: "Abra a corda embaixo mantendo a contração por 1s." },
+        { nome: "Flexão de Punho com Halter (Wrist Curl)", series: "2x15", obs: "Antebraço apoiado." },
+        { nome: "Extensão de Punho com Halter (Reverse Wrist Curl)", series: "2x15", obs: "Antebraço apoiado." }
       ]
     }]
   },
-  D: { nome: "DIA D — Lower 2 (Unilateral & Glúteo Médio)", foco: "Assimetrias · Glúteo Médio · Controle Patelar", cor: "#FB923C", bg: "#1e0d00",
+  D: { nome: "DIA D — Inferiores 2", foco: "Glúteo Médio · Posterior de Coxa · Assimetrias", cor: "#FB923C", bg: "#1e0d00",
     grupos: [
       { nome: "🔥 PREPARAÇÃO CLÍNICA MANDATÓRIA (12 min)", itens: [
-        { nome: "Mobilidade Ativa de Quadril 90 90", series: "2 min", obs: "Sentada, joelhos fletidos a 90°, alterne a rotação interna e externa sem tirar o quadril do solo." },
-        { nome: "Ponte Glútea Unilateral e Clamshell Mini-Band", series: "2x12", obs: "Ativação profunda do glúteo médio para estabilização de pelve durante o búlgaro." }
+        { nome: "Mobilidade de Quadril 90/90 (90/90 Hip Mobility)", series: "2 min", obs: "Alterne a rotação interna e externa sem tirar o quadril do solo." },
+        { nome: "Ponte Glútea Unilateral + Ostra com Elástico (Clamshell)", series: "2x12", obs: "Ativação profunda do glúteo médio." }
       ]},
-      { nome: "🦵 UNILATERAL & FOCO EM GLÚTEO", itens: [
-        { nome: "Agachamento Búlgaro", series: "3x10-12", obs: "Incline o tronco levemente à frente para transferir o vetor de força para o glúteo, poupando a patela." },
-        { nome: "Hip Thrust Unilateral com Halter", series: "3x10-12", obs: "Mantenha o alinhamento horizontal dos ossos do quadril. Não permita rotação da pelve." },
-        { nome: "Cadeira Abdutora Tronco Inclinado à Frente", series: "3x15", obs: "Incline o tronco a 45° à frente. Isola o feixe posterior do glúteo médio de forma eficiente." },
-        { nome: "Mesa Flexora Unilateral", series: "3x10-12", obs: "Controle absoluto da descida. Garante o equilíbrio de força entre as duas pernas." }
+      { nome: "🦵 GLÚTEO E POSTERIOR (FOCO UNILATERAL)", itens: [
+        { nome: "Agachamento Búlgaro (Bulgarian Split Squat)", series: "3x10-12", obs: "Incline o tronco levemente à frente para focar no glúteo." },
+        { nome: "Elevação Pélvica Unilateral (Single-Leg Hip Thrust)", series: "3x10-12", obs: "Mantenha o alinhamento horizontal dos ossos do quadril." },
+        { nome: "Cadeira Abdutora com Tronco Inclinado (Seated Hip Abduction)", series: "3x15", obs: "Incline o tronco para a frente para isolar o feixe posterior do glúteo médio." },
+        { nome: "Mesa Flexora Unilateral (Single-Leg Lying Leg Curl)", series: "3x10-12", obs: "Controle absoluto da descida. Corrige assimetrias." }
       ]},
-      { nome: "🦶 PANTURRILHA & TORNOZELO", itens: [
-        { nome: "Panturrilha Sentada na Máquina", series: "4x15-20", obs: "Cadência lenta. O fortalecimento do sóleo estabiliza o tornozelo na fase de passada." },
-        { nome: "Elevação do Tibial Anterior", series: "2x20", obs: "Idem Dia B." }
+      { nome: "🦶 PANTURRILHA E ESTABILIZAÇÃO", itens: [
+        { nome: "Panturrilha Sentada (Seated Calf Raise)", series: "4x15-20", obs: "O fortalecimento do sóleo estabiliza o tornozelo." },
+        { nome: "Elevação de Ponta de Pé na Parede (Tibialis Raise)", series: "2x20", obs: "Calcanhares afastados da parede." }
       ]
     }]
   }
 };
 
 var CARDIO = {
-  A: { tipo: "LISS (Baixo Impacto)", tempo: "20 min", desc: "Esteira inclinada 6-8%. Não segure no painel para não estressar o ombro." },
-  B: { tipo: "Opcional", tempo: "15 min", desc: "Caminhada leve ou elíptico sem movimentação ativa dos braços." },
-  C: { tipo: "LISS (Cardio Regenerativo)", tempo: "20 min", desc: "Bicicleta ergométrica mantendo postura ereta (sem apoiar o peso nos guidões)." },
-  D: { tipo: "Opcional", tempo: "15 min", desc: "Caminhada regenerativa focando na extensão ativa do quadril ao caminhar." }
+  A: { tipo: "LISS (Baixo Impacto)", tempo: "20 min", desc: "Esteira inclinada 6-8%. Pós-treino." },
+  B: { tipo: "Opcional", tempo: "15 min", desc: "Caminhada leve. Pós-treino." },
+  C: { tipo: "LISS (Cardio Regenerativo)", tempo: "20 min", desc: "Bicicleta ergométrica mantendo postura ereta. Pós-treino." },
+  D: { tipo: "Opcional", tempo: "15 min", desc: "Caminhada regenerativa. Pós-treino." }
 };
 
 var ROTACAO = [
-  { dia: "Segunda", treino: "Dia A — Upper 1 (Protetor Acromial)", cor: "#C084FC" },
-  { dia: "Terça", treino: "Dia B — Lower 1 (Cadeia Posterior)", cor: "#38BDF8" },
+  { dia: "Segunda", treino: "Dia A — Superiores 1", cor: "#C084FC" },
+  { dia: "Terça", treino: "Dia B — Inferiores 1", cor: "#38BDF8" },
   { dia: "Quarta", treino: "Descanso Ativo / Liberação Postural", cor: "#ffffff30" },
-  { dia: "Quinta", treino: "Dia C — Upper 2 (Estabilização Escapular)", cor: "#4ADE80" },
-  { dia: "Sexta", treino: "Dia D — Lower 2 (Unilateral / Glúteo)", cor: "#FB923C" },
+  { dia: "Quinta", treino: "Dia C — Superiores 2", cor: "#4ADE80" },
+  { dia: "Sexta", treino: "Dia D — Inferiores 2", cor: "#FB923C" },
   { dia: "Sáb/Dom", treino: "Descanso Estrutural Total", cor: "#ffffff20" }
 ];
 
@@ -378,7 +385,6 @@ function renderTreino() {
       var cargaKey = currentDay + '-' + globalIdx;
       var cargaSalva = cargas[cargaKey] || '';
       
-      // Criação dinâmica da URL de busca de execução no plano cinesiológico
       var termBusca = encodeURIComponent('execução correta ' + ex.nome);
       var linkVideo = 'https://www.youtube.com/results?search_query=' + termBusca;
 
@@ -395,8 +401,8 @@ function renderTreino() {
     html += '</div></div>';
   });
 
-  html += '<div class="ab-card"><div class="ab-title">🧘 CORE ANTI-EXTENSÃO & ESTABILIDADE LOMBAR</div>'
-    + '<div class="ab-text">Execute 3x45s de Prancha Abdominal Clássica (focando em contrair glúteos e empurrar o solo) + 3x12 Dead Bug controlado. Evite abdominais que gerem hiperflexão do quadril, pois eles recrutam excessivamente o psoas.</div></div>';
+  html += '<div class="ab-card"><div class="ab-title">🧘 CORE ANTI-EXTENSÃO E ESTABILIDADE LOMBAR</div>'
+    + '<div class="ab-text">Execute 3x45s de Prancha Abdominal Clássica + 3x12 Dead Bug controlado.</div></div>';
 
   html += '<div class="cardio-card" style="background:#111;border:1px solid ' + t.cor + '35">'
     + '<div class="cardio-top"><div class="cardio-title">🏃 ESPECIFICAÇÃO CARDIOVASCULAR</div><div class="cardio-badges">'
